@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='tphysics',
-      version='0.1',
+      version='0.2',
       description='Package to create a basic physics engine for turtle',
       url='http://github.com/thebillington/tphysics',
       author='thebillington',
