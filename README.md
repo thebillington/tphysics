@@ -98,12 +98,11 @@ player = Rectangle(-100, 100, 20, 50)
 obstacle = Circle(100, 100, 50)
 
 #Add the shapes to the game
-g.add_shape("player", player)
-g.add_shape("obstacle", obstacle)
+g.add_shape(player)
+g.add_shape(obstacle)
 ```
 
-Please note: When adding shapes each needs a unique key identifier. Although this doesn't currently do anything functionally, it helps ensure that shapes are not duplicated.
-In future iterations this will allow for shapes to be deleted without requiring clean up.
+Shapes will be drawn in the order they are added.
 
 #### Updating the game window
 
@@ -118,7 +117,7 @@ while True:
 
 #### Collision detection
 
-There is currently thorought collision detection support for circles and rectangles. Shape rotation as of the current time is unsupported.
+There is currently thorough collision detection support for circles and rectangles. Shape rotation as of the current time is unsupported.
 
 In order to check collision between two shapes you must use the collide function:
 
