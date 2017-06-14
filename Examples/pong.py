@@ -48,12 +48,20 @@ paddle_speed = 20
 #Create functions to deal with key presses
 def w():
 	p1.y += paddle_speed
+	while p1.collide(walls[2]):
+		p1.y -= 1
 def s():
 	p1.y -= paddle_speed
+	while p1.collide(walls[3]):
+		p1.y += 1
 def up():
 	p2.y += paddle_speed
+	while p2.collide(walls[2]):
+		p2.y -= 1
 def down():
 	p2.y -= paddle_speed
+	while p2.collide(walls[3]):
+		p2.y += 1
 def space():
 	global running
 	running = not running
