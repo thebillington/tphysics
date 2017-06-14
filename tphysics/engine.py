@@ -1,4 +1,4 @@
-import shapes
+from shapes import *
 import turtle
 
 #Create a game object to hold all of our physics
@@ -42,7 +42,12 @@ class Game(object):
         
         #For each of the shapes in the dictionary, draw them
         for s in self.shapes.items():
-            self.rectangle(s[1])
+			
+			#Check the type of the shape
+			if s[1].type == Shape.RECT:
+				self.rectangle(s[1])
+			if s[1].type == Shape.CIRCLE:
+				self.circle(s[1])
         
         #Update the screen
         self.window.update()
@@ -70,4 +75,32 @@ class Game(object):
 			
 		#Set the colour and end the fill
 		self.t.color('red')
+		self.t.end_fill()
+    
+    #Create a function to allow us to draw a rectangle
+    def circle(self, s):
+		
+		#Set the increment for the lines that compose our circle
+		#So that 360 * increment = circumference
+		circumference = math.pi * s.radius * 2
+		inc = circumference / 360
+		
+		#Set the colour of the line
+		self.t.color('black')
+		
+		#Move the pen to the correct position
+		self.t.penup()
+		self.t.goto(s.x - (inc/2), s.y + s.radius)
+		self.t.pendown()
+		
+		#Start the fill
+		self.t.begin_fill()
+		
+		#Draw the rectangle
+		for i in range(360):
+			self.t.forward(inc)
+			self.t.right(1)
+			
+		#Set the colour and end the fill
+		self.t.color('yellow')
 		self.t.end_fill()

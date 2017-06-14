@@ -4,8 +4,6 @@ import math
 #Define a class to hold opur shape
 class Shape(object):
 
-    #create our fields and set defolt values
-
     #Types
     POINT = "point"
     RECT = "rectangle"
@@ -119,8 +117,7 @@ class Circle(Shape):
 
         #If the s is a circle
         if s.type == Shape.CIRCLE:
-
             return self.pythagoras(s) < self.radius + s.radius
-
+		#Otherwise
         if s.type == Shape.RECT:
             return s.collide(self) 
