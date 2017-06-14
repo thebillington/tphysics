@@ -14,6 +14,12 @@ class Game(object):
 
         #Create a turtle to do our drawing
         self.t = turtle.Turtle()
+        
+        #Hide the turtle
+        self.t.hideturtle()
+        
+        #Disable the tracer
+        self.t.tracer(0, 0)
 
         #Create a dictionary of shapes
         self.shapes = {}
@@ -23,7 +29,7 @@ class Game(object):
 
         #Check if the shape already exists
         if key in self.shapes.keys():
-            raise KeyError("Shape already exists.")
+            raise KeyError("A shape with that key already exists.")
 
         #Add the shape
         self.shapes[key] = shape
@@ -37,6 +43,9 @@ class Game(object):
         #For each of the shapes in the dictionary, draw them
         for s in self.shapes.items():
             self.rectangle(s[1])
+        
+        #Update the screen
+        self.window.update()
     
     #Create a function to allow us to draw a rectangle
     def rectangle(self, s):
