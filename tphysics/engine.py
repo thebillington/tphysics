@@ -55,16 +55,23 @@ class Game(object):
     #Create a function to allow us to draw a rectangle
     def rectangle(self, s):
 		
-		#Set the colour of the line
-		self.t.color('black')
+		#Check whether the line should be drawn
+		if s.line:
+			#Set the colour of the line
+			self.t.color(s.line_colour)
+		else:
+			#Set the colour of the line to the fill colour
+			self.t.color(s.fill_colour)
 		
 		#Move the pen to the correct position
 		self.t.penup()
 		self.t.goto(s.x - (s.width/2), s.y + (s.height/2))
 		self.t.pendown()
 		
-		#Start the fill
-		self.t.begin_fill()
+		#If the shape should be filled
+		if s.fill:
+			#Start the fill
+			self.t.begin_fill()
 		
 		#Draw the rectangle
 		for i in range(2):
@@ -72,10 +79,12 @@ class Game(object):
 			self.t.right(90)
 			self.t.forward(s.height)
 			self.t.right(90)
-			
-		#Set the colour and end the fill
-		self.t.color('red')
-		self.t.end_fill()
+		
+		#If the shape should be filled
+		if s.fill:
+			#Set the colour and end the fill
+			self.t.color(s.fill_colour)
+			self.t.end_fill()
     
     #Create a function to allow us to draw a rectangle
     def circle(self, s):
@@ -85,22 +94,31 @@ class Game(object):
 		circumference = math.pi * s.radius * 2
 		inc = circumference / 360
 		
-		#Set the colour of the line
-		self.t.color('black')
+		#Check whether the line should be drawn
+		if s.line:
+			#Set the colour of the line
+			self.t.color(s.line_colour)
+		else:
+			#Set the colour of the line to the fill colour
+			self.t.color(s.fill_colour)
 		
 		#Move the pen to the correct position
 		self.t.penup()
 		self.t.goto(s.x - (inc/2), s.y + s.radius)
 		self.t.pendown()
 		
-		#Start the fill
-		self.t.begin_fill()
+		#If the shape should be filled
+		if s.fill:
+			#Start the fill
+			self.t.begin_fill()
 		
 		#Draw the rectangle
 		for i in range(360):
 			self.t.forward(inc)
 			self.t.right(1)
-			
-		#Set the colour and end the fill
-		self.t.color('yellow')
-		self.t.end_fill()
+		
+		#If the shape should be filled
+		if s.fill:
+			#Set the colour and end the fill
+			self.t.color(s.fill_colour)
+			self.t.end_fill()

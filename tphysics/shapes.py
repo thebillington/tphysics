@@ -14,6 +14,11 @@ class Shape(object):
         self.x = x
         self.y = y
         self.type = type
+        
+        self.line_colour = "black"
+        self.fill_colour = "red"
+        self.fill = True
+        self.line = True
 
     #Define pythagoral function
     def pythagoras(self, s):
@@ -112,6 +117,9 @@ class Circle(Shape):
         super(Circle, self).__init__(x, y, Shape.CIRCLE)
         #Set the radious
         self.radius = radius
+        
+        #Set the default fill colour
+        self.fill_colour = "yellow"
 
     def collide(self, s):
 
