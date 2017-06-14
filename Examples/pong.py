@@ -8,13 +8,11 @@ g = Game("Pong Game", 600, 600, "grey")
 walls = [Rectangle(-290, 0, 20, 600), Rectangle(290, 0, 20, 600), Rectangle(0, 290, 600, 20), Rectangle(0, -290, 600, 20)]
 
 #Set the walls fill colour to black and add them to the game
-for i in range(len(walls)):
-	
+for w in walls:
 	#Set the colour
-	walls[i].fill_colour = "black"
-	
+	w.fill_colour = "black"
 	#Add the wall to the game
-	g.add_shape("wall{}".format(i), walls[i])
+	g.add_shape(w)
 	
 #Create the centre line
 centre = Rectangle(0, 0, 5, 600)
@@ -34,10 +32,10 @@ ball = Circle(0, 0, 5)
 ball.fill_colour = "white"
 
 #Add the shapes
-g.add_shape("player1", p1)
-g.add_shape("player2", p2)
-g.add_shape("centre", centre)
-g.add_shape("ball", ball)
+g.add_shape(p1)
+g.add_shape(p2)
+g.add_shape(centre)
+g.add_shape(ball)
 
 #Game loop
 while True:

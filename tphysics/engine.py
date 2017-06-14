@@ -21,18 +21,14 @@ class Game(object):
         #Disable the tracer
         self.t.tracer(0, 0)
 
-        #Create a dictionary of shapes
-        self.shapes = {}
+        #Create a list of shapes
+        self.shapes = []
     
     #Define a function to add a shape
-    def add_shape(self, key, shape):
-
-        #Check if the shape already exists
-        if key in self.shapes.keys():
-            raise KeyError("A shape with that key already exists.")
+    def add_shape(self, shape):
 
         #Add the shape
-        self.shapes[key] = shape
+        self.shapes.append(shape)
     
     #Create a function to iterate over each of the shapes and draw them on screen
     def update(self):
@@ -41,13 +37,13 @@ class Game(object):
         self.t.clear()
         
         #For each of the shapes in the dictionary, draw them
-        for s in self.shapes.items():
+        for s in self.shapes:
 			
 			#Check the type of the shape
-			if s[1].type == Shape.RECT:
-				self.rectangle(s[1])
-			if s[1].type == Shape.CIRCLE:
-				self.circle(s[1])
+			if s.type == Shape.RECT:
+				self.rectangle(s)
+			if s.type == Shape.CIRCLE:
+				self.circle(s)
         
         #Update the screen
         self.window.update()
