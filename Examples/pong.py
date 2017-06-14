@@ -27,7 +27,7 @@ p1.fill_colour = "red"
 p2.fill_colour = "green"
 
 #Create the ball
-ball = Circle(0, 0, 5)
+ball = Circle(0, 0, 10)
 #Set the ball colour
 ball.fill_colour = "white"
 
@@ -36,6 +36,25 @@ g.add_shape(p1)
 g.add_shape(p2)
 g.add_shape(centre)
 g.add_shape(ball)
+
+#Set the paddle speed
+paddle_speed = 50
+
+#Create functions to deal with key pressed for player movement
+def w():
+	p1.y += paddle_speed
+def s():
+	p1.y -= paddle_speed
+def up():
+	p2.y += paddle_speed
+def down():
+	p2.y -= paddle_speed
+	
+#Add the functions to key listeners
+g.addkeypress(w, "w")
+g.addkeypress(s, "s")
+g.addkeypress(up, "Up")
+g.addkeypress(down, "Down")
 
 #Game loop
 while True:
