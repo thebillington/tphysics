@@ -122,3 +122,10 @@ class Game(object):
 			#Set the colour and end the fill
 			self.t.color(s.fill_colour)
 			self.t.end_fill()
+        
+    #Create a function to add a key listener
+    def addkeypress(self, f, key):
+		
+		#Add the key and start listening
+        self.window.onkey(f, key)
+        self.window.listen()
