@@ -15,6 +15,8 @@ Please feel free to read through the code as it is thoroughly commented with aim
 
 ### [Installation](#install)
 
+### [Examples](#tphysics-examples)
+
 ### [Getting Started](#getting-started)
 
 * [Creating a game object](#create-a-new-game-object)
@@ -22,6 +24,8 @@ Please feel free to read through the code as it is thoroughly commented with aim
 * [Drawing the game window](#updating-the-game-window)
 * [Checking for collisions](#collision-detection)
 * [Colour](#colour-and-fill)
+* [Key presses](#detecting-key-presses)
+* [Verlet objects](#verlet-objects)
 
 ## Installation
 
@@ -48,7 +52,7 @@ Now you are ready to run the pip install command install tphysics as a python pa
 pip install .
 ```
 
-Depending on your permission, you may need to run this as root:
+Depending on your permissions, you may need to run this as root:
 
 ```
 sudo pip install .
@@ -68,6 +72,16 @@ The last step is to check that the package has installed correctly. Create a new
 ```python
 import tphysics
 ```
+
+If you get an **ImportError** then you have not installed the package correctly. Go back and ensure you have successfully installed using pip.
+
+## tphysics Examples
+
+To see what you can do with tphysics, check out the following examples:
+
+* [Bouncy Ball](https://github.com/thebillington/tphysics/tree/master/Examples/BouncyBall) - An example that implements verlet integration to create a real physics simulator for a bouncing ball.
+
+* [Pong](https://github.com/thebillington/tphysics/tree/master/Examples/Pong) - A super simple pong game that implements basic collision detection and physics.
 
 ## Getting started
 
@@ -164,3 +178,86 @@ obstacle.line = False
 ```
 
 Please note: With the current implementation disabling both of these will draw a shape with an outline the same colour as the fill colour.
+
+#### Detecting key presses
+
+Detecting key presses in tphysics is extremely simple.
+Simply create a function that you want to handle the key press and pass this to your game object along with the name of the key you want to detect:
+
+```python
+#Create a function to handle the up key press
+def up():
+	#Move the player up
+	player.y += 1
+	
+#Pass the function to the game object
+g.addkeypress(up, "Up")
+```
+
+For a full list of available key names, check out the [TK documentation](https://www.tcl.tk/man/tcl8.4/TkCmd/keysyms.htm).
+
+Note: tphysics makes use of the built in functions in turtle to allow detection of key presses.
+Due to the python 2.7 support this means tphysics does not have access to the **onkeypress** and **onkeyrelease** functions included in python 3+.
+
+This makes tphysics geared more towards strategy games than real time action games as you can only detect single key presses, not **key held** events.
+To take a look at what tphysics can and can't do well, have a browse through and play some of the [example](https://github.com/thebillington/tphysics/tree/master/Examples) games.
+
+#### Verlet Objects
+
+So far there is one Verlet Object implemented which is a version of the Circle object called **VerletCircle**.
+This object has a very (and I mean very) simple implementation of verlet integration to allow for physics updates.
+
+To use the VerletCircle, import it and create an object:
+
+```python
+from tphysics import VerletCircle
+
+#Create a VerletCircle(x, y, radius, xspeed, yspeed) with an initial x speed of 2
+vc = VerletCircle(0, 0, 10, 2, 0)
+```
+
+To update the position of the circle, call the update function within your game loop:
+
+```python
+#Game loop
+while True:
+
+	#Update the position of the verlet circle
+	vc.update()
+```
+
+If the speed of the circle falls below 0.01 on the x or y axis it will come to a stop. This will be implemented as a threshold in future updates.
+
+To set the speed of the circle use the **setspeed** function. This can be done on both axes separately:
+
+```python
+vc.setspeed(5, 5)
+vc.setxspeed(5)
+vc.setyspeed(5)
+```
+
+You can also get the speed on either axis:
+
+```python
+vc.getxspeed()
+vc.getyspeed()
+```
+
+And you can get the object to bounce on the x or y axis. When you get the ball to bounce, you need to also provide:
+
+* Elasticity (for both the x and y axis bounce)
+* Friction (for just the y axis bounce)
+
+To have no loss of energy in your physics system, simply set your elasticity to **1** and your friction to **0**:
+
+```python
+#Set physics constants
+e = 1
+f = 0
+
+#Bounce on the x axis
+vc.bouncex(e)
+vc.bouncey(e, f)
+```
+
+I am currently deciding on the best way to integrate verlet integration effectively so expect this API to change in future updates.
