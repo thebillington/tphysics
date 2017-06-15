@@ -112,8 +112,8 @@ class Circle(Shape):
 
     #Define init for my circle
     def __init__(self, x, y, radius):
-
-        #Carete our derivative shape
+        
+        #Create our derivative shape
         super(Circle, self).__init__(x, y, Shape.CIRCLE)
         #Set the radious
         self.radius = radius
