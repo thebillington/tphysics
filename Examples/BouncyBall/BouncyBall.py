@@ -49,7 +49,7 @@ def click(x, y):
 		running = True
 		
 #Add click listeners to the game
-g.addclick(click, 2)
+g.addclick(click)
 
 #Game loop
 while True:

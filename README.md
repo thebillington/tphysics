@@ -25,7 +25,12 @@ Please feel free to read through the code as it is thoroughly commented with aim
 * [Checking for collisions](#collision-detection)
 * [Colour](#colour-and-fill)
 * [Key presses](#detecting-key-presses)
+* [Mouse clicks](#detecting-mouse-clicks)
+
+### [Verlet](#verlet-physics)
+
 * [Verlet objects](#verlet-objects)
+* [Verlet with mouse clicks](#verlet-with-mouse-clicks)
 
 ## Installation
 
@@ -202,6 +207,32 @@ Due to the python 2.7 support this means tphysics does not have access to the **
 This makes tphysics geared more towards strategy games than real time action games as you can only detect single key presses, not **key held** events.
 To take a look at what tphysics can and can't do well, have a browse through and play some of the [example](https://github.com/thebillington/tphysics/tree/master/Examples) games.
 
+#### Detecting mouse clicks
+
+Mouse click detection is handled in a very similar way to key presses.
+Simply create a function that you want to handle your click and pass it in to the click listener:
+
+```python
+#Create a function to handle the click
+def click(x, y):
+	print("Mouse clicked at location ({},{})".format(x, y))
+
+#Add the click listener
+g.addclick(click)
+```
+
+By default the addclick function sets clicks to the left mouse button. You can specify a left or right click using 1 or 2 respectively:
+
+```python
+#Left click listener
+g.addclick(click, 1)
+
+#Right click listener
+g.addclick(click, 2)
+```
+
+## Verlet Physics
+
 #### Verlet Objects
 
 So far there is one Verlet Object implemented which is a version of the Circle object called **VerletCircle**.
@@ -261,3 +292,34 @@ vc.bouncey(e, f)
 ```
 
 I am currently deciding on the best way to integrate verlet integration effectively so expect this API to change in future updates.
+
+#### Verlet with mouse clicks
+
+It is extremely easy to combine key clicks with verlet integration to set the speed of an object:
+
+```python
+#Create a boolean to store whether the ball was clicked
+global clicked
+clicked = False
+
+#Functions to handle mouse clicks
+def click(x, y):
+	
+	#Get the global
+	global clicked
+	
+	#Check whether the click collides with the ball
+	if ball.collide(Point(x,y)) and not clicked:
+		#Set clicked to true
+		clicked = True
+	elif clicked:
+		#Set the current position of the ball to the mouse x and y
+		ball.x = x
+		ball.y = y
+		clicked = False
+		
+#Add click listeners to the game
+g.addclick(click)
+```
+
+To see this method in action, check out the [BouncyBall](https://github.com/thebillington/tphysics/tree/master/Examples/BouncyBall) example.
