@@ -120,10 +120,10 @@ class Game(object):
 			self.t.end_fill()
         
     #Create a function to add a mouse click
-    def addclick(self, f):
+    def addclick(self, f, m=1):
 		
 		#Add the function to the click listener
-		self.window.onclick(f)
+		self.window.onclick(f, m)
     
     #Create a function to add a key listener
     def addkeypress(self, f, key):
