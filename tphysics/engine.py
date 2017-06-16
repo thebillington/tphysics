@@ -119,6 +119,12 @@ class Game(object):
 			self.t.color(s.fill_colour)
 			self.t.end_fill()
         
+    #Create a function to add a mouse click
+    def addclick(self, f):
+		
+		#Add the function to the click listener
+		self.window.onclick(f)
+    
     #Create a function to add a key listener
     def addkeypress(self, f, key):
 		
