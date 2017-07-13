@@ -9,7 +9,7 @@ If you are looking for a simple library that implements basic physics collision 
 Please feel free to read through the code as it is thoroughly commented with aims to providing a suitable library for people interested in learning the basics of Game Engineering.
 
 ### Supported versions:
-* Python 2.7.13
+* Python 3+
 
 ## Contents
 
@@ -199,13 +199,16 @@ def up():
 g.addkeypress(up, "Up")
 ```
 
+You can also check whether a specific key is pressed using the **ispressed** function on your game object. Currently only the alphanumeric, space and arrow keys are currently supported:
+
+```python
+#Check whether a specific key is being pressed
+if g.ispressed("Left"):
+	#Change the x speed
+	xspeed = -5
+```
+
 For a full list of available key names, check out the [TK documentation](https://www.tcl.tk/man/tcl8.4/TkCmd/keysyms.htm).
-
-Note: tphysics makes use of the built in functions in turtle to allow detection of key presses.
-Due to the python 2.7 support this means tphysics does not have access to the **onkeypress** and **onkeyrelease** functions included in python 3+.
-
-This makes tphysics geared more towards strategy games than real time action games as you can only detect single key presses, not **key held** events.
-To take a look at what tphysics can and can't do well, have a browse through and play some of the [example](https://github.com/thebillington/tphysics/tree/master/Examples) games.
 
 #### Detecting mouse clicks
 
