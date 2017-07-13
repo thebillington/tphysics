@@ -1,6 +1,6 @@
 #Imports
 from tphysics import VerletCircle, Rectangle, Point, Game
-from Tkinter import TclError
+from tkinter import TclError
 
 #Create the game
 g = Game("Bouncy Ball", 600, 600, "grey")
@@ -18,8 +18,8 @@ g.add_shape(ball)
 
 #Set the physics constants
 elasticity = 0.8
-friction = 0.2
-gravity = 0.6
+friction = 0.1
+gravity = 0.5
 max_fall = 10
 
 #Create a boolean to store whether the ball was clicked

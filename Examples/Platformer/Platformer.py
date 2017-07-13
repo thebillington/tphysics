@@ -1,6 +1,6 @@
 #Imports
 from tphysics import Rectangle, Game
-from Tkinter import TclError
+from tkinter import TclError
 
 #Create a new game
 g = Game("Platformer", 600, 600, "grey")

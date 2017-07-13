@@ -1,7 +1,7 @@
 #Imports
 from tphysics import Game, Rectangle, Circle
 from random import randint
-from Tkinter import TclError
+from tkinter import TclError
 
 #Create the game window
 g = Game("Pong Game", 600, 600, "grey")
