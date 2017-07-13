@@ -32,7 +32,7 @@ Please feel free to read through the code as it is thoroughly commented with aim
 * [Verlet objects](#verlet-objects)
 * [Verlet with mouse clicks](#verlet-with-mouse-clicks)
 
-## Installation
+## Install
 
 tphysics is not currently registered as a package with the PyPi Package Manager, therefore install requires cloning of this repository onto your computer and install with **pip**.
 
@@ -87,6 +87,8 @@ To see what you can do with tphysics, check out the following examples:
 * [Bouncy Ball](https://github.com/thebillington/tphysics/tree/master/Examples/BouncyBall) - An example that implements verlet integration to create a real physics simulator for a bouncing ball.
 
 * [Pong](https://github.com/thebillington/tphysics/tree/master/Examples/Pong) - A super simple pong game that implements basic collision detection and physics.
+
+* [Platformer](https://github.com/thebillington/tphysics/tree/master/Examples/Pong) - A very simple platforming game with basic gravity implemented and platform collision detection.
 
 ## Getting started
 
