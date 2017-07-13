@@ -1,5 +1,5 @@
 #Imports
-from tphysics import VerletCircle, Rectangle, Point, Game
+from tphysics import VerletCircle, Rectangle, Point, Game, KeyListener
 from tkinter import TclError
 
 #Create the game

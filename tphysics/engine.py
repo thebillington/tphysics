@@ -1,55 +1,59 @@
-from shapes import *
+from tphysics.shapes import *
+from tphysics.keys import KeyListener
 import turtle
 
 #Create a game object to hold all of our physics
 class Game(object):
 
-    #Initialize
-    def __init__(self, name, width, height, colour):
+	#Initialize
+	def __init__(self, name, width, height, colour):
 
-        #Create a screen and set the name
-        self.window = turtle.Screen()
-        self.window.title(name)
-        self.window.screensize(width, height, colour)
+		#Create a screen and set the name
+		self.window = turtle.Screen()
+		self.window.title(name)
+		self.window.screensize(width, height, colour)
 
-        #Create a turtle to do our drawing
-        self.t = turtle.Turtle()
-        
-        #Hide the turtle
-        self.t.hideturtle()
-        
-        #Disable the tracer
-        self.t.tracer(0, 0)
+		#Create a turtle to do our drawing
+		self.t = turtle.Turtle()
+		
+		#Hide the turtle
+		self.t.hideturtle()
+		
+		#Disable the tracer
+		self.window.tracer(0, 0)
 
-        #Create a list of shapes
-        self.shapes = []
-    
-    #Define a function to add a shape
-    def add_shape(self, shape):
+		#Create a list of shapes
+		self.shapes = []
+		
+		#Create a key listener
+		self.keylistener = KeyListener(self.window)
+	
+	#Define a function to add a shape
+	def add_shape(self, shape):
 
-        #Add the shape
-        self.shapes.append(shape)
-    
-    #Create a function to iterate over each of the shapes and draw them on screen
-    def update(self):
+		#Add the shape
+		self.shapes.append(shape)
+	
+	#Create a function to iterate over each of the shapes and draw them on screen
+	def update(self):
 
-        #Clear the canvas
-        self.t.clear()
-        
-        #For each of the shapes in the dictionary, draw them
-        for s in self.shapes:
+		#Clear the canvas
+		self.t.clear()
+		
+		#For each of the shapes in the dictionary, draw them
+		for s in self.shapes:
 			
 			#Check the type of the shape
 			if s.type == Shape.RECT:
 				self.rectangle(s)
 			if s.type == Shape.CIRCLE:
 				self.circle(s)
-        
-        #Update the screen
-        self.window.update()
-    
-    #Create a function to allow us to draw a rectangle
-    def rectangle(self, s):
+		
+		#Update the screen
+		self.window.update()
+	
+	#Create a function to allow us to draw a rectangle
+	def rectangle(self, s):
 		
 		#Check whether the line should be drawn
 		if s.line:
@@ -81,9 +85,9 @@ class Game(object):
 			#Set the colour and end the fill
 			self.t.color(s.fill_colour)
 			self.t.end_fill()
-    
-    #Create a function to allow us to draw a rectangle
-    def circle(self, s):
+	
+	#Create a function to allow us to draw a rectangle
+	def circle(self, s):
 		
 		#Set the increment for the lines that compose our circle
 		#So that 360 * increment = circumference
@@ -118,16 +122,22 @@ class Game(object):
 			#Set the colour and end the fill
 			self.t.color(s.fill_colour)
 			self.t.end_fill()
-        
-    #Create a function to add a mouse click
-    def addclick(self, f, m=1):
+		
+	#Create a function to add a mouse click
+	def addclick(self, f, m=1):
 		
 		#Add the function to the click listener
 		self.window.onclick(f, m)
-    
-    #Create a function to add a key listener
-    def addkeypress(self, f, key):
+	
+	#Create a function to add a key listener
+	def addkeypress(self, f, key):
 		
 		#Add the key and start listening
-        self.window.onkey(f, key)
-        self.window.listen()
+		self.window.onkey(f, key)
+		self.window.listen()
+		
+	#Create a function to check whether a key is currently being pressed
+	def ispressed(self, k):
+		
+		#Return the key listener check
+		return self.keylistener.isPressed(k)
