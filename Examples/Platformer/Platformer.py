@@ -18,7 +18,6 @@ g.add_shape(ground)
 gravity = 0.5
 fallspeed = -10
 jumpspeed = 12
-global xspeed
 xspeed = 0
 global yspeed
 yspeed = 0
@@ -44,19 +43,6 @@ def jump():
 	if not jumping:
 		yspeed = jumpspeed
 		jumping = True
-		
-#Handle left and right key presses
-def left():
-	global xspeed
-	if xspeed > -5:
-		xspeed -= 1
-def right():
-	global xspeed
-	if xspeed < 5:
-		xspeed += 1
-def stop():
-	global xspeed
-	xspeed = 0
 	
 #Function to resolve platform collisions
 def platform(p):
@@ -65,12 +51,17 @@ def platform(p):
 		
 #Add key listeners
 g.addkeypress(jump, "space")
-g.addkeypress(left, "Left")
-g.addkeypress(right, "Right")
-g.addkeypress(stop, "Down")
 
 #Game loop
 while True:
+		
+	#Handle left and right key presses
+	if g.ispressed("Left"):
+		xspeed = -5
+	elif g.ispressed("Right"):
+		xspeed = 5
+	else:
+		xspeed = 0
 	
 	#Move the player
 	player.x += xspeed

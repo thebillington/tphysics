@@ -47,22 +47,6 @@ g.add_shape(ball)
 paddle_speed = 20
 
 #Create functions to deal with key presses
-def w():
-	p1.y += paddle_speed
-	while p1.collide(walls[2]):
-		p1.y -= 1
-def s():
-	p1.y -= paddle_speed
-	while p1.collide(walls[3]):
-		p1.y += 1
-def up():
-	p2.y += paddle_speed
-	while p2.collide(walls[2]):
-		p2.y -= 1
-def down():
-	p2.y -= paddle_speed
-	while p2.collide(walls[3]):
-		p2.y += 1
 def space():
 	global running
 	running = not running
@@ -76,10 +60,6 @@ def reset():
 	speed = [3, randint(-2, 2)]
 	
 #Add the functions to key listeners
-g.addkeypress(w, "w")
-g.addkeypress(s, "s")
-g.addkeypress(up, "Up")
-g.addkeypress(down, "Down")
 g.addkeypress(space, "space")
 
 #Set the speed of the ball
@@ -91,6 +71,24 @@ while True:
 	
 	#If the game is running
 	if running:
+		
+		#Handle key presses
+		if g.ispressed("w"):
+			p1.y += paddle_speed
+			while p1.collide(walls[2]):
+				p1.y -= 1
+		if g.ispressed("s"):
+			p1.y -= paddle_speed
+			while p1.collide(walls[3]):
+				p1.y += 1
+		if g.ispressed("Up"):
+			p2.y += paddle_speed
+			while p2.collide(walls[2]):
+				p2.y -= 1
+		if g.ispressed("Down"):
+			p2.y -= paddle_speed
+			while p2.collide(walls[3]):
+				p2.y += 1
 		
 		#Change the balls position
 		ball.x += speed[0] * xdirection
