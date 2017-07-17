@@ -27,12 +27,21 @@ class Game(object):
 		
 		#Create a key listener
 		self.keylistener = KeyListener(self.window)
+		
+		#Create an empty list of sprites
+		self.sprites = []
 	
 	#Define a function to add a shape
 	def add_shape(self, shape):
 
 		#Add the shape
 		self.shapes.append(shape)
+		
+	#Define a function to add a sprite
+	def add_sprite(self, sprite):
+		
+		#Add the sprite
+		self.sprites.append(sprite)
 	
 	#Create a function to iterate over each of the shapes and draw them on screen
 	def update(self):
