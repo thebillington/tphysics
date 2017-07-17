@@ -3,7 +3,7 @@
 tphysics is a cross platform physics engine with Turtle integration built for educational purposes.
 It has been written as a pet project as I wanted to create a game engine for personal use that did not require use of any external libraries.
 
-If you are wanting a fully fledged game engine with sprite integration then I suggest checking out other engines that may be more fit for purpose.
+If you are wanting a fully fledged game engine then I suggest checking out other engines that may be more fit for purpose such as pygame.
 If you are looking for a simple library that implements basic physics collision detection with an Object Oriented approach then tphysics is the one for you.
 
 Please feel free to read through the code as it is thoroughly commented with aims to providing a suitable library for people interested in learning the basics of Game Engineering.
@@ -26,6 +26,7 @@ Please feel free to read through the code as it is thoroughly commented with aim
 * [Colour](#colour-and-fill)
 * [Key presses](#detecting-key-presses)
 * [Mouse clicks](#detecting-mouse-clicks)
+* [Sprites](#using-sprites)
 
 ### [Verlet](#verlet-physics)
 
@@ -87,6 +88,8 @@ To see what you can do with tphysics, check out the following examples:
 * [Bouncy Ball](https://github.com/thebillington/tphysics/tree/master/Examples/BouncyBall) - An example that implements verlet integration to create a real physics simulator for a bouncing ball.
 
 * [Pong](https://github.com/thebillington/tphysics/tree/master/Examples/Pong) - A super simple pong game that implements basic collision detection and physics.
+
+* [Sprites](https://github.com/thebillington/tphysics/tree/master/Examples/Sprites) - An example that shows how to add sprites to the game and move them with key presses.
 
 * [Platformer](https://github.com/thebillington/tphysics/tree/master/Examples/Pong) - A very simple platforming game with basic gravity implemented and platform collision detection.
 
@@ -234,6 +237,37 @@ g.addclick(click, 1)
 
 #Right click listener
 g.addclick(click, 2)
+```
+
+#### Using sprites
+
+Please note: Sprites are only compatible with images in the **gif** format. Any other image formats will cause Tkinter to throw an error.
+
+Using sprites is extremely simple:
+
+```python
+#Create a new game
+g = Game("Sprite Game", 600, 600, "grey")
+
+#Create a sprite using Sprite(Image File Location (gif), Game window, x position, y position)
+player = Sprite("player.gif", g.window, 0, 0)
+
+#Add the sprites to the game
+g.add_sprite(player)
+
+#Game loop
+while True:
+	
+	#Check for key presses
+	if g.ispressed("Up"):
+		player.move(0, 1)
+```
+
+You can show and hide sprites using the **setvisible** and **setinvisible** functions:
+
+```python
+#Set the sprite invisible
+player.setinvisible()
 ```
 
 ## Verlet Physics
