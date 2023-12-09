@@ -62,12 +62,13 @@ class Point(Shape):
 class Rectangle(Shape):
 
     #Define our initialize function
-    def __init__(self, x, y, width, height):
+    def __init__(self, x, y, width, height, colour = "red"):
 
         #Create our derivative shape
         super(Rectangle, self).__init__(x, y, Shape.RECT)
         self.width = width
         self.height = height
+        self.fill_colour = colour
 
     #Define a function to get the corners
     def update_corners(self):
@@ -143,7 +144,7 @@ class Rectangle(Shape):
 class Circle(Shape):
 
     #Define init for my circle
-    def __init__(self, x, y, radius):
+    def __init__(self, x, y, radius, colour = "yellow"):
         
         #Create our derivative shape
         super(Circle, self).__init__(x, y, Shape.CIRCLE)
@@ -151,7 +152,7 @@ class Circle(Shape):
         self.radius = radius
         
         #Set the default fill colour
-        self.fill_colour = "yellow"
+        self.fill_colour = colour
 
     def collide(self, s):
 
@@ -175,12 +176,13 @@ class Circle(Shape):
 class Game(object):
 
     #Initialize
-    def __init__(self, name, width = 600, height = 600, colour = "black", sleep_time = 0.01):
+    def __init__(self, name, colour = "grey", sleep_time = 0.01):
 
         #Create a screen and set the name
         self.window = turtle.Screen()
         self.window.title(name)
-        self.window.screensize(width, height, colour)
+        self.window.bgcolor(colour)
+        self.window.setup(1.0, 1.0)
 
         #Create a turtle to do our drawing
         self.t = turtle.Turtle()
@@ -193,6 +195,9 @@ class Game(object):
 
         #Create a list of shapes
         self.shapes = []
+
+        # Create a list of text objects
+        self.text = []
         
         #Create a key listener
         self.keylistener = KeyListener(self.window)
@@ -202,6 +207,10 @@ class Game(object):
 
         # Set the sleep time
         self.sleep = sleep_time
+
+    # Function to return the width and height of the window
+    def get_window_size(self):
+        return (self.window.window_width(), self.window.window_height())
     
     #Define a function to add a shape
     def add_shape(self, shape):
@@ -232,9 +241,16 @@ class Game(object):
                     self.rectangle(s)
                 if s.type == Shape.CIRCLE:
                     self.circle(s)
+
+            # For each of the shapes in the list, render
+            for t in self.text:
+                self.render_text(t)
             
             #Update the screen
             self.window.update()
+
+            # Wipe the text list ready for the next frame
+            self.text = []
 
             # Sleep
             sleep(self.sleep)
@@ -308,18 +324,26 @@ class Game(object):
             self.t.end_fill()
 
     # Create a function that lets us draw text to the screen
-    def write(self, x, y, text, c):
+    def render_text(self, text_object):
 
                 # Move to the correct location
                 self.t.penup()
-                self.t.goto(x, y)
+                self.t.goto(text_object.x, text_object.y)
                 self.t.pendown()
 
                 # Set the colour
-                self.t.color(c)
+                self.t.color(text_object.colour)
                 
                 # Write the text
-                self.t.write(text)
+                self.t.write(text_object.text, font=("Arial", text_object.size, "normal"))
+
+    # Function to add text to be rendered on the next frame
+    def write(self, x, y, text, colour, size):
+
+        # Add a text object to the text list
+        self.text.append(
+            Text(x, y, text, colour, size)
+        )
         
     #Create a function to add a mouse click
     def addclick(self, f, m=1):
@@ -339,6 +363,19 @@ class Game(object):
         
         #Return the key listener check
         return self.keylistener.isPressed(k)
+    
+# TEXT
+
+# Create a class to store information about text
+class Text(object):
+
+    # Constructor
+    def __init__(self, x, y, text, colour, size):
+        self.x = x
+        self.y = y
+        self.text = text
+        self.colour = colour
+        self.size = size
 
 # KEYS
 
