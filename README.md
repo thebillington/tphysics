@@ -20,8 +20,8 @@ Please feel free to read through the code as it is thoroughly commented with aim
 ### [Learn to use tphysics](#using-tphysics)
 
 * [Creating a game object](#create-a-new-game-object)
+* [Rendering the game window](#updating-the-game-window)
 * [Creating shapes](#drawing-shapes)
-* [Drawing the game window](#updating-the-game-window)
 * [Colour](#colour-and-fill)
 * [Key presses](#detecting-key-presses)
 * [Checking for collisions](#collision-detection)
@@ -68,6 +68,23 @@ from tphysics import Game
 game = Game("Basic Game", "light blue")
 ```
 
+#### Updating the game window
+
+In order to draw your shapes at their correct location, create a game loop that calls the **update** function. When the update function is called, it renders all of the changes that have happened since the last time you called it and creates a new *frame*:
+
+```python
+from tphysics import Game
+
+#Create a new game object and store it in a variable
+game = Game("Basic Game", "light blue")
+
+#Game loop
+while True:
+
+	#Update the game
+	g.update()
+```
+
 #### Drawing shapes
 
 Once you have created a game it is extremely simple to draw shapes. Simply create a new shape, store it in a variable and add it to the game:
@@ -94,17 +111,6 @@ while True:
 ```
 
 Shapes will be drawn in the order they are added.
-
-#### Updating the game window
-
-In order to draw your shapes at their correct location, create a game loop that calls the **update** function:
-
-```python
-#Game loop
-while True:
-	#Update the game
-	g.update()
-```
 
 #### Colour and fill
 
