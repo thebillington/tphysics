@@ -122,6 +122,35 @@ while True:
 
 Shapes will be drawn in the order they are added.
 
+It is easy to move shapes by accessing the `x` and `y` properties:
+
+```python
+from tphysics import Game, Rectangle, Circle
+
+#Create a new game object and store it in a variable
+game = Game("Basic Game", "light blue")
+
+#Create a player Rectangle(x, y, width, height, colour)
+player = Rectangle(0, 0, 20, 20, "orange")
+game.add_shape(player)
+
+# Store the direction
+direction = 1
+
+# Game loop
+while True:
+
+	# Move the player by direction
+	player.x += direction
+
+	# If player goes above x=100 or below x=-100, flip direction
+	if player.x > 100 or player.x < -100:
+		direction = direction = direction * -1
+
+	# Render the next frame
+	game.update()
+```
+
 #### Colour and fill
 
 Changing the colour of objects is easy and can be done by directly accessing the **fill_colour** and **line_colour** variables in your shape.
@@ -145,7 +174,7 @@ Please note: With the current implementation disabling both of these will draw a
 
 Detecting key presses in tphysics is extremely simple.
 
-The best way to check whether a specific key is pressed is by using the **ispressed** function on your game object. Currently only the alphanumeric, space and arrow keys are currently supported:
+The best way to check whether a specific key is pressed is by using the **ispressed** function on your game object. Currently only the alphanumeric, space and arrow keys are supported:
 
 ```python
 from tphysics import Game, Rectangle
