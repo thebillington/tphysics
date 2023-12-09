@@ -70,7 +70,7 @@ game = Game("Basic Game", "light blue")
 
 #### Updating the game window
 
-In order to draw your shapes at their correct location, create a game loop that calls the **update** function. When the update function is called, it renders all of the changes that have happened since the last time you called it and creates a new *frame*:
+In order to update any changes you make between frames, you must create a game loop that calls the **update** function. When the update function is called, it renders all of the changes that have happened since the last time you called it and creates a new *frame*:
 
 ```python
 from tphysics import Game
