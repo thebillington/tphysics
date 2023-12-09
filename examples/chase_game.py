@@ -7,12 +7,12 @@
 from tphysics import *
 from random import randint
 
-game = Game("Chase Game", "light blue")
+game = Game("Chase Game", "light blue", fullscreen=True)
 window_width, window_height = game.get_window_size()
 
 player = Rectangle(0, 0, 30, 30, "yellow")
 game.add_shape(player)
-player_speed = 5
+player_speed = 3
 
 enemy = Rectangle(
     randint(int(-window_width/2) + 30, int(window_width/2) - 30),
@@ -22,7 +22,7 @@ enemy = Rectangle(
     "red"
 )
 game.add_shape(enemy)
-enemy_speed = 4
+enemy_speed = 2
 
 pickup = Circle(
     randint(int(-window_width/2) + 30, int(window_width/2) - 30),

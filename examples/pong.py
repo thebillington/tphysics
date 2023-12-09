@@ -65,6 +65,9 @@ g.addkeypress(space, "space")
 speed = [3, randint(-3, 3)]
 xdirection = 1
 
+player_one_score = 0
+player_two_score = 0
+
 #Game loop
 while True:
     
@@ -93,11 +96,17 @@ while True:
         ball.x += speed[0] * xdirection
         ball.y += speed[1]
         
-        #If the ball collides with a top wall
+        #If the ball collides with a horizontal wall, reset
         for i in range(2):
             if walls[i].collide(ball):
                 running = False
                 reset()
+                # Check which wall was hit and increase score
+                if i == 0:
+                    player_two_score += 1
+                if i == 1:
+                    player_one_score += 1
+        #If the ball collides with a top wall, reverse direction
         for i in range(2, 4):
             if walls[i].collide(ball):
                 speed[1] = -speed[1]
@@ -122,6 +131,14 @@ while True:
             speed[0] += 1
             xdirection = -xdirection
             speed[1] = -speed[1]
+    
+    # If game isn't running
+    else:
+        g.write(-85, 300, "Press Space to Start", "black", 20)
+
+    # Show player scores
+    g.write(-300, 300, f"P1 Score: {player_one_score}", "black", 20)
+    g.write(200, 300, f"P2 Score: {player_two_score}", "black", 20)
     
     # Render the next frame
     g.update()

@@ -176,13 +176,14 @@ class Circle(Shape):
 class Game(object):
 
     #Initialize
-    def __init__(self, name, colour = "grey", sleep_time = 0.01):
+    def __init__(self, name, colour = "grey", fullscreen=False, sleep_time = 0.01):
 
         #Create a screen and set the name
         self.window = turtle.Screen()
         self.window.title(name)
         self.window.bgcolor(colour)
-        self.window.setup(1.0, 1.0)
+        if fullscreen:
+            self.window.setup(1.0, 1.0)
 
         #Create a turtle to do our drawing
         self.t = turtle.Turtle()
