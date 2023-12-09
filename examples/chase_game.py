@@ -7,7 +7,7 @@
 from tphysics import *
 from random import randint
 
-game = Game("Chase Game")
+game = Game("Chase Game", "light blue")
 window_width, window_height = game.get_window_size()
 
 player = Rectangle(0, 0, 30, 30, "yellow")

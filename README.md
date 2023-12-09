@@ -17,83 +17,41 @@ Please feel free to read through the code as it is thoroughly commented with aim
 
 ### [Examples](#tphysics-examples)
 
-### [Getting Started](#getting-started)
+### [Learn to use tphysics](#using-tphysics)
 
 * [Creating a game object](#create-a-new-game-object)
 * [Creating shapes](#drawing-shapes)
 * [Drawing the game window](#updating-the-game-window)
-* [Checking for collisions](#collision-detection)
 * [Colour](#colour-and-fill)
 * [Key presses](#detecting-key-presses)
+* [Checking for collisions](#collision-detection)
+* [Writing text](#writing-text)
 * [Mouse clicks](#detecting-mouse-clicks)
 * [Sprites](#using-sprites)
 
-### [Verlet](#verlet-physics)
-
-* [Verlet objects](#verlet-objects)
-* [Verlet with mouse clicks](#verlet-with-mouse-clicks)
-
 ## Install
 
-tphysics is not currently registered as a package with the PyPi Package Manager, therefore install requires cloning of this repository onto your computer and install with **pip**.
+### Using as a script
 
-To get started using pip read the documentation [here](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip).
+Using as a python script is extremely simple and can be done on almost any computer, provided the Python installation includes TKinter. This makes `tphysics` ideal for use in schools as you can just copy the code from this repository and import it directly into your code.
 
-#### Step One
+1. Open [tphysics.py](https://github.com/thebillington/tphysics/blob/master/tphysics.py) and `copy` the file contents.
+2. Create a new python file in your IDE (likely `IDLE` if you are on school computers) and paste the contents
+3. Save the file as `tphysics.py` - if you save it as anything else, it won't work!
+4. Create a new file in *the same directory/folder* as your `tphysics.py` file and test with `from tphysics import *`
 
-Clone this repository onto your local file system, either using a Git manager or through terminal with the following command:
+### Installing with PIP
 
-```
-git clone https://github.com/thebillington/tphysics
-```
-
-#### Step Two
-
-Once you have the repository downloaded locally, navigate to the root folder of the project in your terminal window or command prompt. The root folder is the one that holds **setup.py**.
-
-#### Step Three
-
-Now you are ready to run the pip install command install tphysics as a python package:
-```
-pip install .
-```
-
-Depending on your permissions, you may need to run this as root:
-
-```
-sudo pip install .
-```
-
-And if you already have an earlier version of tphysics installed you may have to use the **upgrade** flag:
-
-
-```
-sudo pip install . --upgrade
-```
-
-#### Step Four
-
-The last step is to check that the package has installed correctly. Create a new python file and **import tphysics**:
-
-```python
-import tphysics
-```
-
-If you get an **ImportError** then you have not installed the package correctly. Go back and ensure you have successfully installed using pip.
+> [!WARNING]  
+> The following section was no longer relevant as I have updated tphysics to a single file library, to make it simple to download and use on school computers. There are plans to release tphysics officially via `PyPi` but currently, tphysics CANNOT be installed to your python installation with `pip`.
 
 ## tphysics Examples
 
-To see what you can do with tphysics, check out the following examples:
+This section is currently being fleshed out. Remember that if you want to run any examples, you must make sure you execute the script from the *same directory* as your `tphysics.py` script.
 
-* [Bouncy Ball](https://github.com/thebillington/tphysics/tree/master/Examples/BouncyBall) - An example that implements verlet integration to create a real physics simulator for a bouncing ball.
+You can check out the `examples` folder for a full list of up to date examples.
 
-* [Pong](https://github.com/thebillington/tphysics/tree/master/Examples/Pong) - A super simple pong game that implements basic collision detection and physics.
-
-* [Sprites](https://github.com/thebillington/tphysics/tree/master/Examples/Sprites) - An example that shows how to add sprites to the game and move them with key presses.
-
-* [Platformer](https://github.com/thebillington/tphysics/tree/master/Examples/Pong) - A very simple platforming game with basic gravity implemented and platform collision detection.
-
-## Getting started
+## Using tphysics
 
 Getting started with tphysics is easy. First, select which **classes** you are going to need and import them.
 The following example will make use of the circle, square and game classes.
@@ -104,10 +62,10 @@ First, create a new game object with the desired title, width, height and colour
 
 ```python
 #Imports
-from tphysics import Game, Rectangle, Circle
+from tphysics import Game
 
 #Create a new game object and store it in a variable
-g = Game("Basic Game", 600, 600, "grey")
+game = Game("Basic Game", "light blue")
 ```
 
 #### Drawing shapes
@@ -115,15 +73,24 @@ g = Game("Basic Game", 600, 600, "grey")
 Once you have created a game it is extremely simple to draw shapes. Simply create a new shape, store it in a variable and add it to the game:
 
 ```python
-#Create a player Rectangle(x, y, width, height)
-player = Rectangle(-100, 100, 20, 50)
+from tphysics import Game, Rectangle, Circle
 
-#Create an obstacle Circle(x, y, radius)
-obstacle = Circle(100, 100, 50)
+#Create a new game object and store it in a variable
+game = Game("Basic Game", "light blue")
 
-#Add the shapes to the game
-g.add_shape(player)
-g.add_shape(obstacle)
+#Create a player Rectangle(x, y, width, height, colour)
+player = Rectangle(-100, 100, 20, 50, "orange")
+game.add_shape(player)
+
+#Create an obstacle Circle(x, y, radius, colour)
+obstacle = Circle(100, 100, 50, "green")
+game.add_shape(obstacle)
+
+# Game loop
+while True:
+
+	# Render the next frame
+	game.update()
 ```
 
 Shapes will be drawn in the order they are added.
@@ -138,37 +105,6 @@ while True:
 	#Update the game
 	g.update()
 ```
-
-#### Collision detection
-
-There is currently thorough collision detection support for circles and rectangles. Shape rotation as of the current time is unsupported.
-
-In order to check collision between two shapes you must use the collide function:
-
-```python
-player.collide(obstacle)
-```
-
-The collide function will return **False** for no collision, and **True** for any collision of two same type shapes (circle-circle and rectangle-rectangle).
-
-There is also support for circle-rectangle collision detection, which will return 0 for no collision and a non-zero value for a collision.
-The non-zero values can be used to identify where on the square the centre of the circle collided as per the below chart (1 = center, 2 = alongside, 3 = above/below, 4 = corner, 0 = no collision):
-
-```
-      |       |
-  4       3      4
-      |       |
- _  _  _______  _  _
-      |       |
-  2   |   1   |  2
- _  _ |_______| _  _
- 
-      |       |
-  4       3      4
-      |       |
-```
-
-In future iterations this will be improved to identify which individual corner or side the circle collided with.
 
 #### Colour and fill
 
@@ -192,28 +128,151 @@ Please note: With the current implementation disabling both of these will draw a
 #### Detecting key presses
 
 Detecting key presses in tphysics is extremely simple.
-Simply create a function that you want to handle the key press and pass this to your game object along with the name of the key you want to detect:
+
+The best way to check whether a specific key is pressed is by using the **ispressed** function on your game object. Currently only the alphanumeric, space and arrow keys are currently supported:
 
 ```python
+from tphysics import Game, Rectangle
+
+# Create game object
+game = Game("Key Press Game", "light blue")
+
+# Create player object
+player = Rectangle(0, 0, 20, 20, "green")
+game.add_shape(player)
+
+# Game loop
+while True:
+
+	#Check whether a specific key is being pressed
+	if game.ispressed("Right"):
+		#Change the x speed
+		player.x += 1
+
+	# Update the game
+	game.update()
+```
+
+You can also create a function that you want to handle the key press and pass this to your game object along with the name of the key you want to detect. This is a more advanced way of handling key presses as it requires the passing of `higher order functions`:
+
+```python
+from tphysics import Game, Circle
+
+# Create a game object
+game = Game("Higher Order Keys Example", "light blue")
+
+# Create a player
+player = Circle(0, 0, 10, "orange")
+game.add_shape(player)
+
 #Create a function to handle the up key press
 def up():
 	#Move the player up
 	player.y += 1
 	
 #Pass the function to the game object
-g.addkeypress(up, "Up")
-```
+game.addkeypress(up, "Up")
 
-You can also check whether a specific key is pressed using the **ispressed** function on your game object. Currently only the alphanumeric, space and arrow keys are currently supported:
+# Game loop
+while True:
 
-```python
-#Check whether a specific key is being pressed
-if g.ispressed("Left"):
-	#Change the x speed
-	xspeed = -5
+	# Update the game
+	game.update()
 ```
 
 For a full list of available key names, check out the [TK documentation](https://www.tcl.tk/man/tcl8.4/TkCmd/keysyms.htm).
+
+#### Collision detection
+
+There is currently thorough collision detection support for circles and rectangles. Shape rotation as of the current time is unsupported.
+
+In order to check collision between two shapes you must use the collide function:
+
+```python
+from tphysics import Game, Rectangle, Circle
+from random import randint
+
+# Create game object
+game = Game("Collision Game", "light blue")
+
+# Create player
+player = Rectangle(0, 0, 20, 20, "green")
+game.add_shape(player)
+
+# Create obstacle at random position
+obstacle = Circle(randint(-300,300), randint(-300,300), 5, "red")
+game.add_shape(obstacle)
+
+# Game loop
+while True:
+
+	# Check for key presses and move the player
+    if game.ispressed("Left"):
+        player.x -= 1
+    if game.ispressed("Right"):
+        player.x += 1
+    if game.ispressed("Down"):
+        player.y -= 1
+    if game.ispressed("Up"):
+        player.y += 1
+
+	# Check for a collision
+    if player.collide(obstacle):
+		# Move the obstacle to a rand location between -300 and 300
+        obstacle.x = randint(-300,300)
+        obstacle.y = randint(-300,300)
+
+	# Render the next frame
+    game.update()
+```
+
+The collide function will return **False** for no collision, and **True** for any collision of two same type shapes (circle-circle and rectangle-rectangle).
+
+There is also support for circle-rectangle collision detection, which will return 0 for no collision and a non-zero value for a collision.
+The non-zero values can be used to identify where on the square the centre of the circle collided as per the below chart (1 = center, 2 = alongside, 3 = above/below, 4 = corner, 0 = no collision):
+
+```
+      |       |
+  4       3      4
+      |       |
+ _  _  _______  _  _
+      |       |
+  2   |   1   |  2
+ _  _ |_______| _  _
+ 
+      |       |
+  4       3      4
+      |       |
+```
+
+In future iterations this will be improved to identify which individual corner or side the circle collided with.
+
+#### Writing Text
+
+You can write text by passing your desired text into the `write` function:
+
+```python
+from tphysics import Game
+
+# Create a game object
+game = Game("Score Game", "red")
+
+# Create a score variable
+score = 0
+
+# Game Loop
+while True:
+
+	# Write the score using write(x, y, text, colour, size)
+	game.write(-100, 100, f"Score: {score}", "black", 20)
+
+	# Add 1 to the score
+	score += 1
+
+	# Update the game
+	game.update()
+
+```
 
 #### Detecting mouse clicks
 
@@ -221,12 +280,30 @@ Mouse click detection is handled in a very similar way to key presses.
 Simply create a function that you want to handle your click and pass it in to the click listener:
 
 ```python
+from tphysics import Game, Rectangle
+
+# Create game object
+game = Game("Click Game", "light blue")
+
+# Create a player
+player = Rectangle(0, 0, 20, 20, "green")
+game.add_shape(player)
+
 #Create a function to handle the click
 def click(x, y):
-	print("Mouse clicked at location ({},{})".format(x, y))
+
+	# Move player to click location
+	player.x = x
+	player.y = y
 
 #Add the click listener
-g.addclick(click)
+game.addclick(click)
+
+# Game loop
+while True:
+
+	# Update the game
+	game.update()
 ```
 
 By default the addclick function sets clicks to the left mouse button. You can specify a left or right click using 1 or 2 respectively:
@@ -246,20 +323,22 @@ Please note: Sprites are only compatible with images in the **gif** format. Any 
 Using sprites is extremely simple:
 
 ```python
+from tphysics import Game, Sprite
+
 #Create a new game
-g = Game("Sprite Game", 600, 600, "grey")
+game = Game("Sprite Game", "light blue")
 
 #Create a sprite using Sprite(Image File Location (gif), Game window, x position, y position)
-player = Sprite("player.gif", g.window, 0, 0)
+player = Sprite("player.gif", game.window, 0, 0)
 
 #Add the sprites to the game
-g.add_sprite(player)
+game.add_sprite(player)
 
 #Game loop
 while True:
 	
 	#Check for key presses
-	if g.ispressed("Up"):
+	if game.ispressed("Up"):
 		player.move(0, 1)
 ```
 
@@ -269,96 +348,3 @@ You can show and hide sprites using the **setvisible** and **setinvisible** func
 #Set the sprite invisible
 player.setinvisible()
 ```
-
-## Verlet Physics
-
-#### Verlet Objects
-
-So far there is one Verlet Object implemented which is a version of the Circle object called **VerletCircle**.
-This object has a very (and I mean very) simple implementation of verlet integration to allow for physics updates.
-
-To use the VerletCircle, import it and create an object:
-
-```python
-from tphysics import VerletCircle
-
-#Create a VerletCircle(x, y, radius, xspeed, yspeed) with an initial x speed of 2
-vc = VerletCircle(0, 0, 10, 2, 0)
-```
-
-To update the position of the circle, call the update function within your game loop:
-
-```python
-#Game loop
-while True:
-
-	#Update the position of the verlet circle
-	vc.update()
-```
-
-If the speed of the circle falls below 0.01 on the x or y axis it will come to a stop. This will be implemented as a threshold in future updates.
-
-To set the speed of the circle use the **setspeed** function. This can be done on both axes separately:
-
-```python
-vc.setspeed(5, 5)
-vc.setxspeed(5)
-vc.setyspeed(5)
-```
-
-You can also get the speed on either axis:
-
-```python
-vc.getxspeed()
-vc.getyspeed()
-```
-
-And you can get the object to bounce on the x or y axis. When you get the ball to bounce, you need to also provide:
-
-* Elasticity (for both the x and y axis bounce)
-* Friction (for just the y axis bounce)
-
-To have no loss of energy in your physics system, simply set your elasticity to **1** and your friction to **0**:
-
-```python
-#Set physics constants
-e = 1
-f = 0
-
-#Bounce on the x axis
-vc.bouncex(e)
-vc.bouncey(e, f)
-```
-
-I am currently deciding on the best way to integrate verlet integration effectively so expect this API to change in future updates.
-
-#### Verlet with mouse clicks
-
-It is extremely easy to combine key clicks with verlet integration to set the speed of an object:
-
-```python
-#Create a boolean to store whether the ball was clicked
-global clicked
-clicked = False
-
-#Functions to handle mouse clicks
-def click(x, y):
-	
-	#Get the global
-	global clicked
-	
-	#Check whether the click collides with the ball
-	if ball.collide(Point(x,y)) and not clicked:
-		#Set clicked to true
-		clicked = True
-	elif clicked:
-		#Set the current position of the ball to the mouse x and y
-		ball.x = x
-		ball.y = y
-		clicked = False
-		
-#Add click listeners to the game
-g.addclick(click)
-```
-
-To see this method in action, check out the [BouncyBall](https://github.com/thebillington/tphysics/tree/master/Examples/BouncyBall) example.
