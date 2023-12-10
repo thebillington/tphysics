@@ -218,6 +218,12 @@ class Game(object):
 
         #Add the shape
         self.shapes.append(shape)
+
+    # Define a function to remove a shape
+    def remove_shape(self, shape):
+
+        # Remove the shape pointer from the list
+        self.shapes.remove(shape)
         
     #Define a function to add a sprite
     def add_sprite(self, sprite):
