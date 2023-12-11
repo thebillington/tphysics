@@ -1,12 +1,17 @@
 # tphysics 
 
-tphysics is a cross platform physics engine with Turtle integration built for educational purposes.
-It has been written as a pet project as I wanted to create a game engine for personal use that did not require use of any external libraries.
+tphysics is a cross platform physics engine built for educational purposes. The entire engine is contained in a single file and uses Turtle graphics for rendering, making it an excellent candidate for use in the classroom.
 
-If you are wanting a fully fledged game engine then I suggest checking out other engines that may be more fit for purpose such as pygame.
-If you are looking for a simple library that implements basic physics collision detection with an Object Oriented approach then tphysics is the one for you.
+Over time I have found that students had a hard time learning games programming. They are able to be creative in blocky environments such as Scratch, which are designed specifically for learning the fundamentals of games programming, but when moving into textual languages and engines such as Unity, Godot or even Pygame, learners find it much more difficult to be creative as they are having to learn the complexities of an engine at the same time as a textual language. I found that learners wanting to learn games programming were often copying verbatim from a video tutorial and their ability to make maningful changes and improvements to their final code was limited.
 
-Please feel free to read through the code as it is thoroughly commented with aims to providing a suitable library for people interested in learning the basics of Game Engineering.
+tphysics is designed to bridge the gap from a blocky style environment and more feature complete engines. All of the code is contained in a single file which means learners can take a look under the hood and since tphysics only uses simple rectangles and circles, learners develop an intuitive sense of abstraction, as well as a very pure understanding of collision detection.
+
+The code is thoroughly commented with aims to providing a suitable library for people interested in learning the basics of Game Engineering.
+
+### Resources
+
+How tphysics renders using Turtle graphics: https://youtu.be/QQJT1oDcXUQ
+tphysics tutorials: https://www.youtube.com/playlist?list=PLMr7li1270gySPa4xz8PVVug1z0bCTil_
 
 ### Supported versions:
 * Python 3+
@@ -27,7 +32,6 @@ Please feel free to read through the code as it is thoroughly commented with aim
 * [Checking for collisions](#collision-detection)
 * [Writing text](#writing-text)
 * [Mouse clicks](#detecting-mouse-clicks)
-* [Sprites](#using-sprites)
 
 ## Install
 
@@ -359,37 +363,4 @@ g.addclick(click, 1)
 
 #Right click listener
 g.addclick(click, 2)
-```
-
-#### Using sprites
-
-Please note: Sprites are only compatible with images in the **gif** format. Any other image formats will cause Tkinter to throw an error.
-
-Using sprites is extremely simple:
-
-```python
-from tphysics import Game, Sprite
-
-#Create a new game
-game = Game("Sprite Game", "light blue")
-
-#Create a sprite using Sprite(Image File Location (gif), Game window, x position, y position)
-player = Sprite("player.gif", game.window, 0, 0)
-
-#Add the sprites to the game
-game.add_sprite(player)
-
-#Game loop
-while True:
-	
-	#Check for key presses
-	if game.ispressed("Up"):
-		player.move(0, 1)
-```
-
-You can show and hide sprites using the **setvisible** and **setinvisible** functions:
-
-```python
-#Set the sprite invisible
-player.setinvisible()
 ```
