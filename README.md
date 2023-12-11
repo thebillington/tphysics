@@ -10,7 +10,7 @@ The code is thoroughly commented with aims to providing a suitable library for p
 
 How tphysics renders using Turtle graphics: https://youtu.be/QQJT1oDcXUQ
 
-tphysics tutorials: https://www.youtube.com/playlist?list=PLMr7li1270gySPa4xz8PVVug1z0bCTil_
+tphysics tutorials: https://www.youtube.com/watch?v=QQJT1oDcXUQ&list=PLMr7li1270gySPa4xz8PVVug1z0bCTil_
 
 ### Why tphysics
 
