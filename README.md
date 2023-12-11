@@ -1,12 +1,8 @@
 # tphysics 
 
-tphysics is a cross platform physics engine built for educational purposes. The entire engine is contained in a single file and uses Turtle graphics for rendering, making it an excellent candidate for use in the classroom.
+tphysics is a cross platform physics engine built for educational purposes.
 
-Over time I have found that students had a hard time learning games programming. They are able to be creative in blocky environments such as Scratch, which are designed specifically for learning the fundamentals of games programming, but when moving into textual languages and engines such as Unity, they find it much more difficult.
-
-Learners aren't able to be creative as they are having to learn the complexities of an engine at the same time as a textual language. I found that they were often copying verbatim from a video tutorial and their ability to make maningful changes and improvements to final code was limited.
-
-tphysics is designed to bridge the gap from a blocky style environment and more feature complete engines. All of the code is contained in a single file which means learners can take a look under the hood and since tphysics only uses simple rectangles and circles, learners develop an intuitive sense of abstraction, as well as a very pure understanding of collision detection.
+The entire engine is contained in a single file and uses Turtle graphics for rendering, making it an excellent candidate for use in the classroom.
 
 The code is thoroughly commented with aims to providing a suitable library for people interested in learning the basics of Game Engineering.
 
@@ -15,6 +11,14 @@ The code is thoroughly commented with aims to providing a suitable library for p
 How tphysics renders using Turtle graphics: https://youtu.be/QQJT1oDcXUQ
 
 tphysics tutorials: https://www.youtube.com/playlist?list=PLMr7li1270gySPa4xz8PVVug1z0bCTil_
+
+### Why tphysics
+
+Over time I have found that students had a hard time learning games programming. They are able to be creative in blocky environments such as Scratch, which are designed specifically for learning the fundamentals of games programming, but when moving into textual languages and engines such as Unity, they find it much more difficult.
+
+Learners aren't able to be creative as they are having to learn the complexities of an engine at the same time as a textual language. I found that they were often copying verbatim from a video tutorial and their ability to make maningful changes and improvements to final code was limited.
+
+tphysics is designed to bridge the gap from a blocky style environment and more feature complete engines. All of the code is contained in a single file which means learners can take a look under the hood and since tphysics only uses simple rectangles and circles, learners develop an intuitive sense of abstraction, as well as a very pure understanding of collision detection.
 
 ### Supported versions:
 * Python 3+
