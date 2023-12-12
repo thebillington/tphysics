@@ -144,11 +144,15 @@ game.add_shape(player)
 # Game loop which will contain all of our logic
 while True:
 
-    # Check if the right key is pressed
+    # Check key presses
     if game.ispressed("Right"):
-
-        # Move the player x position
         player.x += 1
+    if game.ispressed("Left"):
+        player.x -= 1
+    if game.ispressed("Up"):
+        player.y += 1
+    if game.ispressed("Down"):
+        player.y -= 1
 
     # Each time the game loop runs, at the end, render a new frame
     game.update()
