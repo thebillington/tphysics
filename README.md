@@ -105,7 +105,7 @@ game = Game("Basic Game", "light blue")
 while True:
 
 	#Update the game
-	g.update()
+	game.update()
 ```
 
 #### Drawing shapes
