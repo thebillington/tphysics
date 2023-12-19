@@ -416,21 +416,6 @@ class Text(object):
         self.size = size
         self.align = align
 
-        # # When the game is closed, tk root disappears and throws an error; catch it
-        # try:
-    
-        #     # If align centre, get width of text and take half from x position
-        #     if align == "centre" or align == "center":
-        #         self.x -= int(Font(font=("Arial", size, "normal")).measure(text)/2)
-        #     # If align right, get width of text and take from x position
-        #     if align == "right":
-        #         self.x -= Font(font=("Arial", size, "normal")).measure(text)
-
-        # except RuntimeError as e:
-        #     print("Program exited successfully.")
-        #     sys.exit()
-
-
 # KEYS
 
 #Create a key listener class
