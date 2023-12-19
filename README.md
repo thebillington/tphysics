@@ -332,6 +332,30 @@ while True:
 
 ```
 
+You can align your text using the `align="left"`, `align="center`, `align="centre"` or `align="right"` parameters.
+
+Text is aligned to the left by default.
+
+```python
+from tphysics import Game
+
+# Create a game object
+game = Game("Score Game", "red")
+
+# Game Loop
+while True:
+
+	# Write aligned text using write(x, y, text, colour, size, align)
+	game.write(-100, 100, "Left align", "black", 20)
+	game.write(-100, 70, "Centre align", "black", 20, align="centre")
+	game.write(-100, 40, "Center align", "black", 20, align="center")
+	game.write(-100, 10, "Right align", "black", 20, align="right")
+
+	# Update the game
+	game.update()
+
+```
+
 #### Detecting mouse clicks
 
 Mouse click detection is handled in a very similar way to key presses.
