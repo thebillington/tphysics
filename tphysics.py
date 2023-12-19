@@ -414,13 +414,20 @@ class Text(object):
         self.text = text
         self.colour = colour
         self.size = size
-        
-        # If align centre, get width of text and take half from x position
-        if align == "centre" or align == "center":
-            self.x -= int(Font(font=("Arial", size, "normal")).measure(text)/2)
-        # If align right, get width of text and take from x position
-        if align == "right":
-            self.x -= Font(font=("Arial", size, "normal")).measure(text)
+
+        # When the game is closed, tk root disappears and throws an error; catch it
+        try:
+    
+            # If align centre, get width of text and take half from x position
+            if align == "centre" or align == "center":
+                self.x -= int(Font(font=("Arial", size, "normal")).measure(text)/2)
+            # If align right, get width of text and take from x position
+            if align == "right":
+                self.x -= Font(font=("Arial", size, "normal")).measure(text)
+
+        except RuntimeError as e:
+            print("Program exited successfully.")
+            sys.exit()
 
 
 # KEYS
@@ -494,7 +501,7 @@ class KeyListener(object):
 class Button:
 
     # Constructor 
-    def __init__(self, x, y, width, height, text, font="Arial", button_colour="grey", text_colour="black", padding=10):
+    def __init__(self, x, y, width, height, text, button_colour="white", text_colour="black", padding=10):
 
         # Create the rectangle, adding the padding
         self.rect = Rectangle(x, y, width + (2 * padding), height + (2 * padding), button_colour)
@@ -511,7 +518,7 @@ class Button:
 
             # Create a font based on the current font size check, being midway between min and max
             font_size = int((min_size + max_size) / 2)
-            font_config = Font(font=(font, font_size, "normal"))
+            font_config = Font(font=("Arial", font_size, "normal"))
 
             # Get the height of the font, and the width of specified text
             font_height = font_config.metrics("ascent")
