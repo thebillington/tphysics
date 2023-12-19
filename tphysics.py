@@ -3,6 +3,7 @@ import math
 import turtle
 from turtle import Turtle
 from tkinter import TclError
+from tkinter.font import Font
 from time import sleep
 import sys
 from functools import partial
@@ -199,6 +200,9 @@ class Game(object):
 
         # Create a list of text objects
         self.text = []
+
+        # Create a list of button objects
+        self.buttons = []
         
         #Create a key listener
         self.keylistener = KeyListener(self.window)
@@ -224,6 +228,18 @@ class Game(object):
 
         # Remove the shape pointer from the list
         self.shapes.remove(shape)
+    
+    #Define a function to add a button
+    def add_button(self, shape):
+
+        #Add the button
+        self.buttons.append(shape)
+
+    # Define a function to remove a button
+    def remove_button(self, button):
+
+        # Remove the button pointer from the list
+        self.buttons.remove(button)
         
     #Define a function to add a sprite
     def add_sprite(self, sprite):
@@ -248,6 +264,12 @@ class Game(object):
                     self.rectangle(s)
                 if s.type == Shape.CIRCLE:
                     self.circle(s)
+
+            # For each of the buttons in the list
+            for b in self.buttons:
+
+                # Draw the button
+                self.button(b)
 
             # For each of the shapes in the list, render
             for t in self.text:
@@ -329,6 +351,15 @@ class Game(object):
             #Set the colour and end the fill
             self.t.color(s.fill_colour)
             self.t.end_fill()
+
+    # Create a function to render a button
+    def button(self, b):
+
+        # Draw the rectangle of the button
+        self.rectangle(b.rect)
+
+        # Render the text
+        self.render_text(b.font)
 
     # Create a function that lets us draw text to the screen
     def render_text(self, text_object):
@@ -448,6 +479,64 @@ class KeyListener(object):
         
         #Return whether the key is pressed or not
         return self.pressed[k]
+    
+# BUTTONS
+
+# Create a class to represent a button, comprised of text and a rectangle
+class Button:
+
+    # Constructor 
+    def __init__(self, x, y, width, height, text, font="Arial", button_colour="grey", text_colour="black", padding=10):
+
+        # Create the rectangle, adding the padding
+        self.rect = Rectangle(x, y, width + (2 * padding), height + (2 * padding), button_colour)
+
+        # Set up variables for a binary search to find the appropriate font size
+        min_size = 2
+        max_size = 200
+
+        # Set the tolerance for how close the actual width/height has to be to the font width/height
+        tolerance = 2
+
+        # Set up a loop to perform a binary search; ln(max_size) = ln(200) = 5.3, so 10 should be double maximum required count
+        for i in range(10):
+
+            # Create a font based on the current font size check, being midway between min and max
+            font_size = int((min_size + max_size) / 2)
+            font_config = Font(font=(font, font_size, "normal"))
+
+            # Get the height of the font, and the width of specified text
+            font_height = font_config.metrics("ascent")
+            text_width = font_config.measure(text)
+
+            # If the font height is too big, reduce max size
+            if font_height > height:
+                max_size = font_size
+
+            # Otherwise if we have found a font within width tolerance, continue
+            elif abs(width - text_width) < tolerance:
+                break
+
+            # Otherwise, if the text width is too big, reduce max size (right pointer for binary search)
+            elif width - text_width < 0:
+                max_size = font_size
+
+            # Otherwise, if the text width is too small, increase minimum size (left pointer for binary search)
+            else:
+                min_size = font_size
+        
+        # Offset the x and y as required (this is based on the height and width of the final font)
+        x += int((width - text_width)/2) + int(padding/2)
+        y -= int(font_height / 2) + int(padding/2)
+
+        # Create the font to be rendered
+        self.font = Text(x - int(width/2), y, text, text_colour, font_size)
+
+    # Function to check whether a given x y coordinate collides with the button
+    def check_click(self, x, y):
+
+        # Return the point to rectangle collision check using the specified point
+        return self.rect.collide(Point(x,y))
 
 # SPRITES
 
