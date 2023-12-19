@@ -8,10 +8,10 @@ player = Rectangle(0, 100, 20, 20, "orange")
 game.add_shape(player)
 
 # Create 2 buttons with different labels, positions and colours
-button_a = Button(-100, 0, 150, 20, "A Button", button_colour="green")
-button_b = Button(100, 0, 150, 20, "B Button", button_colour="red")
+button_a = Button(-100, 0, 150, 20, "A Button", button_colour="green", text_colour="white", padding=12)
+button_b = Button(100, 0, 150, 20, "B Button", button_colour="red", text_colour="black", padding=12)
 
-# Add buttons to the game
+# Add buttons to the game∂
 game.add_button(button_a)
 game.add_button(button_b)
 

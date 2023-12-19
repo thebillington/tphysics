@@ -373,7 +373,7 @@ class Game(object):
         self.t.color(text_object.colour)
         
         # Write the text
-        self.t.write(text_object.text, font=("Arial", text_object.size, "normal"))
+        self.t.write(text_object.text, align=text_object.align, font=("Arial", text_object.size, "normal"))
 
     # Function to add text to be rendered on the next frame
     def write(self, x, y, text, colour, size, align="left"):
@@ -414,20 +414,21 @@ class Text(object):
         self.text = text
         self.colour = colour
         self.size = size
+        self.align = align
 
-        # When the game is closed, tk root disappears and throws an error; catch it
-        try:
+        # # When the game is closed, tk root disappears and throws an error; catch it
+        # try:
     
-            # If align centre, get width of text and take half from x position
-            if align == "centre" or align == "center":
-                self.x -= int(Font(font=("Arial", size, "normal")).measure(text)/2)
-            # If align right, get width of text and take from x position
-            if align == "right":
-                self.x -= Font(font=("Arial", size, "normal")).measure(text)
+        #     # If align centre, get width of text and take half from x position
+        #     if align == "centre" or align == "center":
+        #         self.x -= int(Font(font=("Arial", size, "normal")).measure(text)/2)
+        #     # If align right, get width of text and take from x position
+        #     if align == "right":
+        #         self.x -= Font(font=("Arial", size, "normal")).measure(text)
 
-        except RuntimeError as e:
-            print("Program exited successfully.")
-            sys.exit()
+        # except RuntimeError as e:
+        #     print("Program exited successfully.")
+        #     sys.exit()
 
 
 # KEYS
@@ -521,11 +522,12 @@ class Button:
             font_config = Font(font=("Arial", font_size, "normal"))
 
             # Get the height of the font, and the width of specified text
-            font_height = font_config.metrics("ascent")
+            font_ascent = font_config.metrics("ascent")
+            font_linespace = font_config.metrics("linespace")
             text_width = font_config.measure(text)
 
             # If the font height is too big, reduce max size
-            if font_height > height:
+            if font_ascent > height:
                 max_size = font_size
 
             # Otherwise if we have found a font within width tolerance, continue
@@ -541,11 +543,11 @@ class Button:
                 min_size = font_size
         
         # Offset the x and y as required (this is based on the height and width of the final font)
-        x += int((width - text_width)/2) + int(padding/2)
-        y -= int(font_height / 2) + int(padding/2)
+        x += 2
+        y -= int((font_linespace - font_ascent) / 2) + int(font_ascent / 2)
 
         # Create the font to be rendered
-        self.font = Text(x - int(width/2), y, text, text_colour, font_size)
+        self.font = Text(x, y, text, text_colour, font_size, align="center")
 
     # Function to check whether a given x y coordinate collides with the button
     def check_click(self, x, y):

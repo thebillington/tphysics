@@ -333,7 +333,7 @@ while True:
 
 ```
 
-You can align your text using the `align="left"`, `align="center`, `align="centre"` or `align="right"` parameters.
+You can align your text using the `align="left"`, `align="center`, or `align="right"` parameters.
 
 Text is aligned to the left by default.
 
@@ -348,7 +348,6 @@ while True:
 
 	# Write aligned text using write(x, y, text, colour, size, align)
 	game.write(-100, 100, "Left align", "black", 20)
-	game.write(-100, 70, "Centre align", "black", 20, align="centre")
 	game.write(-100, 40, "Center align", "black", 20, align="center")
 	game.write(-100, 10, "Right align", "black", 20, align="right")
 
@@ -374,8 +373,8 @@ player = Rectangle(0, 100, 20, 20, "orange")
 game.add_shape(player)
 
 # Create 2 buttons with different labels, positions and colours
-button_a = Button(-100, 0, 150, 20, "A Button", button_colour="green")
-button_b = Button(100, 0, 150, 20, "B Button", button_colour="red")
+button_a = Button(-100, 0, 150, 20, "A Button", button_colour="green", text_colour="white", padding=10)
+button_b = Button(100, 0, 150, 20, "B Button", button_colour="red", text_colour="black", padding=10)
 
 # Add buttons to the game
 game.add_button(button_a)
