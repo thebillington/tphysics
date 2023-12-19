@@ -40,6 +40,7 @@ tphysics is designed to bridge the gap from a blocky style environment and more 
 * [Key presses](#detecting-key-presses)
 * [Checking for collisions](#collision-detection)
 * [Writing text](#writing-text)
+* [Making buttons](#making-buttons)
 * [Mouse clicks](#detecting-mouse-clicks)
 
 ## Install
