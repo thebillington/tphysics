@@ -364,23 +364,23 @@ class Game(object):
     # Create a function that lets us draw text to the screen
     def render_text(self, text_object):
 
-                # Move to the correct location
-                self.t.penup()
-                self.t.goto(text_object.x, text_object.y)
-                self.t.pendown()
+        # Move to the correct location
+        self.t.penup()
+        self.t.goto(text_object.x, text_object.y)
+        self.t.pendown()
 
-                # Set the colour
-                self.t.color(text_object.colour)
-                
-                # Write the text
-                self.t.write(text_object.text, font=("Arial", text_object.size, "normal"))
+        # Set the colour
+        self.t.color(text_object.colour)
+        
+        # Write the text
+        self.t.write(text_object.text, font=("Arial", text_object.size, "normal"))
 
     # Function to add text to be rendered on the next frame
-    def write(self, x, y, text, colour, size):
+    def write(self, x, y, text, colour, size, align="left"):
 
         # Add a text object to the text list
         self.text.append(
-            Text(x, y, text, colour, size)
+            Text(x, y, text, colour, size, align)
         )
         
     #Create a function to add a mouse click
@@ -408,12 +408,20 @@ class Game(object):
 class Text(object):
 
     # Constructor
-    def __init__(self, x, y, text, colour, size):
+    def __init__(self, x, y, text, colour, size, align="left"):
         self.x = x
         self.y = y
         self.text = text
         self.colour = colour
         self.size = size
+        
+        # If align centre, get width of text and take half from x position
+        if align == "centre" or align == "center":
+            self.x -= int(Font(font=("Arial", size, "normal")).measure(text)/2)
+        # If align right, get width of text and take from x position
+        if align == "right":
+            self.x -= Font(font=("Arial", size, "normal")).measure(text)
+
 
 # KEYS
 

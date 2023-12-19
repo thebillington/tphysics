@@ -16,16 +16,19 @@ global playing
 playing = True
 
 def click(x,y):
-    
-    # Get the global variable playing and flip it
-    global playing
-    playing = not playing
 
-    # Switch the colour of the button
-    if playing:
-        pause_button.rect.fill_colour = "green"
-    else:
-        pause_button.rect.fill_colour = "red"
+    # Check if pause button clicked
+    if pause_button.check_click(x,y):
+    
+        # Get the global variable playing and flip it
+        global playing
+        playing = not playing
+
+        # Switch the colour of the button
+        if playing:
+            pause_button.rect.fill_colour = "green"
+        else:
+            pause_button.rect.fill_colour = "red"
 
 # Add the click handler to the game
 game.addclick(click)
@@ -50,7 +53,7 @@ while True:
     else:
 
         # Show pause message
-        game.write(-50, 0, "Game is Paused", "white", 20)
+        game.write(0, 20, "Game is Paused", "white", 20, align="centre")
 
     # Render the next frame
     game.update()
