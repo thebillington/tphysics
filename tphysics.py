@@ -7,11 +7,12 @@ from tkinter.font import Font
 from time import sleep
 import sys
 from functools import partial
+import logging
 
 # SHAPES
 
 #Define a class to hold opur shape
-class Shape(object):
+class Shape:
     
     #Types
     POINT = "point"
@@ -174,7 +175,7 @@ class Circle(Shape):
 # ENGINE
 
 #Create a game object to hold all of our physics
-class Game(object):
+class Game:
 
     #Initialize
     def __init__(self, name, colour = "grey", fullscreen=False, sleep_time = 0.01):
@@ -213,39 +214,55 @@ class Game(object):
         # Set the sleep time
         self.sleep = sleep_time
 
+        # Deafault scene
+        self.default_scene_name = "default"
+        self.scenes = {
+            self.default_scene_name: Scene(self.default_scene_name)
+        }
+        self.current_scene = self.scenes[self.default_scene_name]
+
     # Function to return the width and height of the window
     def get_window_size(self):
         return (self.window.window_width(), self.window.window_height())
+    
+    # Function to add a new scene
+    def add_scene(self, scene):
+        self.scenes[scene.name] = scene
+
+    # Function to load a scene
+    def load_scene(self, scene_name):
+        if not scene_name in self.scenes:
+            self.window.bye()
+            raise KeyError(f"Scene '{scene_name}' does not exist!")
+        self.current_scene = self.scenes[scene_name]
+
+    # Function to remove a scene
+    def remove_scene(self, scene):
+        self.scenes.pop(scene.name, None)
     
     #Define a function to add a shape
     def add_shape(self, shape):
 
         #Add the shape
-        self.shapes.append(shape)
+        self.current_scene.add_shape(shape)
 
     # Define a function to remove a shape
     def remove_shape(self, shape):
 
         # Remove the shape pointer from the list
-        self.shapes.remove(shape)
+        self.current_scene.remove_shape(shape)
     
     #Define a function to add a button
     def add_button(self, shape):
 
         #Add the button
-        self.buttons.append(shape)
+        self.current_scene.add_button(shape)
 
     # Define a function to remove a button
     def remove_button(self, button):
 
         # Remove the button pointer from the list
-        self.buttons.remove(button)
-        
-    #Define a function to add a sprite
-    def add_sprite(self, sprite):
-        
-        #Add the sprite
-        self.sprites.append(sprite)
+        self.current_scene.remove_button(button)
     
     #Create a function to iterate over each of the shapes and draw them on screen
     def update(self):
@@ -257,7 +274,7 @@ class Game(object):
             self.t.clear()
             
             #For each of the shapes in the dictionary, draw them
-            for s in self.shapes:
+            for s in self.current_scene.shapes:
                 
                 #Check the type of the shape
                 if s.type == Shape.RECT:
@@ -266,7 +283,7 @@ class Game(object):
                     self.circle(s)
 
             # For each of the buttons in the list
-            for b in self.buttons:
+            for b in self.current_scene.buttons:
 
                 # Draw the button
                 self.button(b)
@@ -402,10 +419,46 @@ class Game(object):
         #Return the key listener check
         return self.keylistener.isPressed(k)
     
+# SCENE
+    
+# Create a class to represent a scene, which is a collection of shapes and buttons
+class Scene:
+
+    # Constructor
+    def __init__(self, name):
+
+        self.name = name
+        self.shapes = []
+        self.buttons = []
+    
+    #Define a function to add a shape
+    def add_shape(self, shape):
+
+        #Add the shape
+        self.shapes.append(shape)
+
+    # Define a function to remove a shape
+    def remove_shape(self, shape):
+
+        # Remove the shape pointer from the list
+        self.shapes.remove(shape)
+    
+    #Define a function to add a button
+    def add_button(self, shape):
+
+        #Add the button
+        self.buttons.append(shape)
+
+    # Define a function to remove a button
+    def remove_button(self, button):
+
+        # Remove the button pointer from the list
+        self.buttons.remove(button)
+    
 # TEXT
 
 # Create a class to store information about text
-class Text(object):
+class Text:
 
     # Constructor
     def __init__(self, x, y, text, colour, size, align="left"):
@@ -419,7 +472,7 @@ class Text(object):
 # KEYS
 
 #Create a key listener class
-class KeyListener(object):
+class KeyListener:
     
     #List of keys
     keys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "space", "Up", "Down", "Left", "Right"]
@@ -543,7 +596,7 @@ class Button:
 # SPRITES
 
 #Create an object to hold a sprite
-class Sprite(object):
+class Sprite:
     
     #Constructor
     def __init__(self, img, window, x, y):
