@@ -2,11 +2,11 @@ from random import randint
 from tphysics import *
 
 # Create the game
-game = Game("Scene Demo", "aquamarine")
+game = Game("Scene Demo")
 
 # Create scenes and add to the game
-menu_scene = Scene("menu")
-game_scene = Scene("game")
+menu_scene = Scene("menu", "indigo")
+game_scene = Scene("game", "light blue")
 game.add_scene(menu_scene)
 game.add_scene(game_scene)
 
@@ -38,7 +38,7 @@ high_score = 0
 # Click handler
 def click(x,y):
 
-    # Check if the click hit any menu buttons, whilst menu is loaded
+    # Check if the menu scene is currently active
     if game.current_scene == menu_scene:
 
         # Check if play button clicked
