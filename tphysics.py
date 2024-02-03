@@ -230,11 +230,11 @@ class Game:
         self.scenes[scene.name] = scene
 
     # Function to load a scene
-    def load_scene(self, scene_name):
-        if not scene_name in self.scenes:
-            self.window.bye()
-            raise KeyError(f"Scene '{scene_name}' does not exist!")
-        self.current_scene = self.scenes[scene_name]
+    def load_scene(self, scene):
+        if not scene.name in self.scenes:
+            self.scenes[scene.name] = scene
+        self.current_scene = self.scenes[scene.name]
+        self.window.bgcolor(self.current_scene.bg_colour)
 
     # Function to remove a scene
     def remove_scene(self, scene):
@@ -304,6 +304,10 @@ class Game:
         except TclError as e:
             print("Program exited successfully.")
             sys.exit()
+
+    # Add quit handler
+    def quit(self):
+        self.window.bye()
     
     #Create a function to allow us to draw a rectangle
     def rectangle(self, s):
@@ -425,9 +429,10 @@ class Game:
 class Scene:
 
     # Constructor
-    def __init__(self, name):
+    def __init__(self, name, bg_colour = "grey"):
 
         self.name = name
+        self.bg_colour = bg_colour
         self.shapes = []
         self.buttons = []
     
@@ -454,6 +459,13 @@ class Scene:
 
         # Remove the button pointer from the list
         self.buttons.remove(button)
+
+    # Override default equality check
+    def __eq__(self, other):
+
+        # Return if the name matches (can only have one scene with same name loaded, since they live in a dictionary)
+        return self.name == other.name
+
     
 # TEXT
 
