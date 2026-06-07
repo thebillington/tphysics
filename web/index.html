@@ -18,9 +18,6 @@
                 <option value="">— Load Example —</option>
             </select>
             <button id="instructions-btn" class="btn btn-instr">Instructions</button>
-            <button id="run-btn" class="btn btn-run" disabled>Run</button>
-            <button id="stop-btn" class="btn btn-stop" disabled>Stop</button>
-            <span id="status" class="status">Loading...</span>
         </div>
     </header>
 
@@ -66,6 +63,11 @@ while True:
         </section>
 
         <section class="canvas-panel">
+            <div class="canvas-controls">
+                <button id="run-btn" class="btn btn-run" disabled>Run</button>
+                <button id="stop-btn" class="btn btn-stop" disabled>Stop</button>
+                <span id="status" class="status">Loading...</span>
+            </div>
             <div class="canvas-wrapper">
                 <canvas id="game-canvas" width="800" height="700" tabindex="0"></canvas>
             </div>
@@ -116,6 +118,10 @@ while True:
                 'Cmd-/': 'toggleComment',
             },
             viewportMargin: Infinity,
+        });
+
+        editor.on('focus', () => {
+            if (tickRunning) stopCode();
         });
 
         const runBtn = document.getElementById('run-btn');

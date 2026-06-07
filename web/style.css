@@ -376,6 +376,16 @@ main {
     flex-shrink: 0;
 }
 
+.canvas-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
 .canvas-wrapper {
     flex: 1;
     display: flex;
