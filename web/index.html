@@ -631,13 +631,11 @@ while True:
 
         canvas.addEventListener('click', (e) => {
             const rect = canvas.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
             worker.postMessage({ type: 'click', x, y, button: e.button });
-        });
-
-        window.addEventListener('resize', () => {
-            // Resize handling can be added here
         });
 
         initWorker();
