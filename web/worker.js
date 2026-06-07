@@ -20,6 +20,10 @@ async function init(moduleSources) {
 
         pyodide = await loadPyodide({ indexURL: PYODIDE_URL });
 
+        pyodide.setStdout({
+            batched: (text) => self.postMessage({ type: 'stdout', text }),
+        });
+
         self.postMessage({ type: 'status', text: 'Installing shim modules...' });
 
         installFiles(moduleSources);

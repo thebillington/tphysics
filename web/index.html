@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>tphysics REPL</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23282a36' width='100' height='100' rx='12' stroke='%236272a4' stroke-width='4'/%3E%3Ctext y='65' x='50' text-anchor='middle' font-size='50' font-family='monospace' font-weight='bold' fill='%23f8f8f2'%3E_%3C/text%3E%3Ctext y='48' x='35' text-anchor='middle' font-size='38' font-family='monospace' font-weight='bold' fill='%2350fa7b'%3E%3E%3C/text%3E%3C/svg%3E">
 
     <link rel="stylesheet" href="vendor/codemirror/codemirror.min.css">
     <link rel="stylesheet" href="vendor/codemirror/dracula.min.css">
@@ -12,7 +13,7 @@
 </head>
 <body>
     <header>
-        <h1>tphysics <span class="subtitle">browser REPL</span></h1>
+        <h1>tphysics <span class="subtitle">game engine in your browser</span></h1>
         <div class="controls">
             <select id="example-select" class="example-select">
                 <option value="">— Load Example —</option>
@@ -62,6 +63,8 @@ while True:
     game.update()</textarea>
         </section>
 
+        <div id="resize-handle" class="resize-handle"></div>
+
         <section class="canvas-panel">
             <div class="canvas-controls">
                 <button id="run-btn" class="btn btn-run" disabled>Run</button>
@@ -71,6 +74,7 @@ while True:
             <div class="canvas-wrapper">
                 <canvas id="game-canvas" width="800" height="700" tabindex="0"></canvas>
             </div>
+            <div id="h-resize-handle" class="h-resize-handle"></div>
             <div class="console-wrapper">
                 <div class="panel-label">console</div>
                 <pre id="console"></pre>
@@ -134,6 +138,8 @@ while True:
         const loadBtn = document.getElementById('load-btn');
         const downloadBtn = document.getElementById('download-btn');
         const copyBtn = document.getElementById('copy-btn');
+        const resizeHandle = document.getElementById('resize-handle');
+        const canvasPanel = document.querySelector('.canvas-panel');
 
         let worker = null;
         let workerReady = false;
@@ -144,6 +150,60 @@ while True:
         let dirty = false;
         const GAME_KEYS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ']);
         const STORAGE_PREFIX = 'tphysics_file_';
+
+        let isResizing = false;
+        const originalAspect = canvas.width / canvas.height;
+
+        resizeHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            resizeHandle.classList.add('active');
+            document.body.style.cursor = 'col-resize';
+            document.body.style.userSelect = 'none';
+            e.preventDefault();
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+            const mainRect = document.querySelector('main').getBoundingClientRect();
+            const newWidth = mainRect.right - e.clientX;
+            const clampedWidth = Math.max(400, Math.min(1000, newWidth));
+            canvasPanel.style.width = clampedWidth + 'px';
+        });
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                resizeHandle.classList.remove('active');
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
+
+        const hResizeHandle = document.getElementById('h-resize-handle');
+        const consoleWrapper = document.querySelector('.console-wrapper');
+        const canvasWrapper = document.querySelector('.canvas-wrapper');
+        let isHResizing = false;
+
+        hResizeHandle.addEventListener('mousedown', (e) => {
+            isHResizing = true;
+            hResizeHandle.classList.add('active');
+            document.body.style.cursor = 'row-resize';
+            document.body.style.userSelect = 'none';
+        });
+        document.addEventListener('mousemove', (e) => {
+            if (!isHResizing) return;
+            const canvasRect = canvasWrapper.getBoundingClientRect();
+            const newConsoleHeight = window.innerHeight - e.clientY - 56 - 10;
+            const minConsoleHeight = 80;
+            const maxConsoleHeight = canvasRect.height - 100;
+            consoleWrapper.style.height = Math.max(minConsoleHeight, Math.min(maxConsoleHeight, newConsoleHeight)) + 'px';
+        });
+        document.addEventListener('mouseup', () => {
+            if (isHResizing) {
+                isHResizing = false;
+                hResizeHandle.classList.remove('active');
+                document.body.style.cursor = '';
+                document.body.style.userSelect = '';
+            }
+        });
 
         function updateFileIndicator() {
             const name = currentFileName || 'untitled';
@@ -435,7 +495,6 @@ while True:
                         showStatus('Running', 'running');
                         runBtn.disabled = true;
                         stopBtn.disabled = false;
-                        clearConsole();
                         tickRunning = true;
                         requestAnimationFrame(sendTick);
                         break;
@@ -444,7 +503,6 @@ while True:
                         showStatus('Running', 'running');
                         runBtn.disabled = true;
                         stopBtn.disabled = false;
-                        clearConsole();
                         break;
 
                     case 'done':
@@ -584,5 +642,8 @@ while True:
 
         initWorker();
     </script>
+    <footer>
+        <a href="https://github.com/thebillington/tphysics" target="_blank" rel="noopener noreferrer"><span class="repo">tphysics</span></a> is an open source game engine built and maintained by <a href="https://github.com/thebillington" target="_blank" rel="noopener noreferrer">thebillington</a>
+    </footer>
 </body>
 </html>

@@ -252,6 +252,36 @@ main {
     overflow: hidden;
 }
 
+.resize-handle {
+    width: 6px;
+    background: var(--bg-secondary);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    cursor: col-resize;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+
+.resize-handle:hover,
+.resize-handle.active {
+    background: var(--accent-green);
+}
+
+.h-resize-handle {
+    height: 6px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    cursor: row-resize;
+    flex-shrink: 0;
+    transition: background 0.15s;
+}
+
+.h-resize-handle:hover,
+.h-resize-handle.active {
+    background: var(--accent-green);
+}
+
 /* Editor panel */
 .editor-panel {
     flex: 1;
@@ -371,6 +401,7 @@ main {
 .canvas-panel {
     width: 820px;
     min-width: 400px;
+    max-width: 1000px;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -427,4 +458,27 @@ main {
     overflow-y: auto;
     white-space: pre-wrap;
     line-height: 1.4;
+}
+
+footer {
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+footer a {
+    color: var(--accent-green);
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer .repo {
+    font-family: var(--font-mono);
 }
