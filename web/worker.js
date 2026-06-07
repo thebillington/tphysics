@@ -1,4 +1,4 @@
-const PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/';
+const PYODIDE_URL = 'vendor/pyodide/';
 
 importScripts(PYODIDE_URL + 'pyodide.js');
 
