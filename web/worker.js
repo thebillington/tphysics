@@ -162,6 +162,27 @@ def _patched_isPressed(self, k):
 
 import tphysics as _tp
 _tp.KeyListener.isPressed = _patched_isPressed
+
+def _patched_update(self):
+    try:
+        self.t.clear()
+        for s in self.current_scene.shapes:
+            if s.type == _tp.Shape.RECT:
+                self.rectangle(s)
+            if s.type == _tp.Shape.CIRCLE:
+                self.circle(s)
+        for b in self.current_scene.buttons:
+            self.button(b)
+        for t in self.text:
+            self.render_text(t)
+        self.window.update()
+        self.text = []
+    except Exception:
+        import sys
+        print("Program exited successfully.")
+        sys.exit()
+
+_tp.Game.update = _patched_update
 _stop_requested = False
 
 ${setupCode}
