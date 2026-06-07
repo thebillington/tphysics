@@ -21,7 +21,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: Copy assets into web/
         run: |
+          rm -f web/tphysics.py
           cp tphysics.py web/tphysics.py
+          rm -rf web/examples
           cp -r examples web/examples
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
