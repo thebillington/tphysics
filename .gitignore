@@ -103,5 +103,5 @@ ENV/
 docs
 
 # Dev symlinks
-web/README.md
 web/examples
+web/tphysics.py

@@ -9,15 +9,15 @@ PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 WEB_DIR = os.path.dirname(os.path.abspath(__file__))
 
-readme_link = os.path.join(WEB_DIR, 'README.md')
 examples_link = os.path.join(WEB_DIR, 'examples')
-readme_src = os.path.join(REPO_ROOT, 'README.md')
+tp_link = os.path.join(WEB_DIR, 'tphysics.py')
 examples_src = os.path.join(REPO_ROOT, 'examples')
+tp_src = os.path.join(REPO_ROOT, 'tphysics.py')
 
-if not os.path.exists(readme_link):
-    os.symlink(readme_src, readme_link)
 if not os.path.exists(examples_link):
     os.symlink(examples_src, examples_link)
+if not os.path.exists(tp_link):
+    os.symlink(tp_src, tp_link)
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):

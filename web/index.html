@@ -313,23 +313,43 @@ while True:
             '/modules/tkinter/font.py': 'modules/tkinter/font.py',
         };
 
-        const EXAMPLE_GAMES = [
-            { name: 'Simple Chase', path: 'examples/games/chase_game_simple.py' },
-            { name: 'Chase Game', path: 'examples/games/chase_game.py' },
-            { name: 'Flappy Bird', path: 'examples/games/flappy_bird.py' },
-            { name: 'Pong', path: 'examples/games/pong.py' },
-            { name: 'Platformer', path: 'examples/games/platformer.py' },
-            { name: 'Apple Catch', path: 'examples/games/apple_catch.py' },
-            { name: 'Aim Trainer', path: 'examples/games/aim_trainer.py' },
-            { name: 'Snowglobe', path: 'examples/lesson_plans/snowglobe.py' },
-        ];
+        const EXAMPLES = {
+            'Basics': [
+                { name: 'Drawing Shapes', path: 'examples/basics/drawing_shapes.py' },
+                { name: 'Movement', path: 'examples/basics/movement.py' },
+                { name: 'Key Presses', path: 'examples/basics/key_presses.py' },
+                { name: 'Key Presses (Functions)', path: 'examples/basics/keys_presses_functions.py' },
+                { name: 'Collisions', path: 'examples/basics/collisions.py' },
+                { name: 'Detecting Clicks', path: 'examples/basics/detecting_clicks.py' },
+                { name: 'Writing Text', path: 'examples/basics/writing_text.py' },
+                { name: 'Text Alignment', path: 'examples/basics/text_align.py' },
+                { name: 'Buttons', path: 'examples/basics/buttons_simple.py' },
+                { name: 'Pause Button', path: 'examples/basics/buttons.py' },
+                { name: 'Scenes', path: 'examples/basics/scenes.py' },
+            ],
+            'Games': [
+                { name: 'Simple Chase', path: 'examples/games/chase_game_simple.py' },
+                { name: 'Chase Game', path: 'examples/games/chase_game.py' },
+                { name: 'Flappy Bird', path: 'examples/games/flappy_bird.py' },
+                { name: 'Pong', path: 'examples/games/pong.py' },
+                { name: 'Platformer', path: 'examples/games/platformer.py' },
+                { name: 'Apple Catch', path: 'examples/games/apple_catch.py' },
+                { name: 'Aim Trainer', path: 'examples/games/aim_trainer.py' },
+                { name: 'Snowglobe', path: 'examples/lesson_plans/snowglobe.py' },
+            ],
+        };
 
         const exampleSelect = document.getElementById('example-select');
-        for (const g of EXAMPLE_GAMES) {
-            const opt = document.createElement('option');
-            opt.value = g.path;
-            opt.textContent = g.name;
-            exampleSelect.appendChild(opt);
+        for (const [group, items] of Object.entries(EXAMPLES)) {
+            const optgroup = document.createElement('optgroup');
+            optgroup.label = group;
+            for (const g of items) {
+                const opt = document.createElement('option');
+                opt.value = g.path;
+                opt.textContent = g.name;
+                optgroup.appendChild(opt);
+            }
+            exampleSelect.appendChild(optgroup);
         }
 
         async function loadExample(path) {
@@ -480,7 +500,7 @@ while True:
         instrBtn.addEventListener('click', async () => {
             if (!readmeBody.dataset.loaded) {
                 try {
-                    const resp = await fetch('README.md?t=' + Date.now());
+                    const resp = await fetch('INSTRUCTIONS.md?t=' + Date.now());
                     const md = await resp.text();
                     readmeBody.innerHTML = marked.parse(md);
                     readmeBody.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(h => {
