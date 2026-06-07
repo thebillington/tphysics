@@ -1,0 +1,2 @@
+class TclError(Exception):
+    pass

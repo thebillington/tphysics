@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tphysics REPL</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/dracula.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.7.0/github-markdown.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>tphysics <span class="subtitle">browser REPL</span></h1>
+        <div class="controls">
+            <select id="example-select" class="example-select">
+                <option value="">— Load Example —</option>
+            </select>
+            <button id="instructions-btn" class="btn btn-instr">Instructions</button>
+            <button id="run-btn" class="btn btn-run" disabled>Run</button>
+            <button id="stop-btn" class="btn btn-stop" disabled>Stop</button>
+            <span id="status" class="status">Loading...</span>
+        </div>
+    </header>
+
+    <main>
+        <section class="editor-panel">
+            <div class="panel-label">editor</div>
+            <textarea id="code-editor">from tphysics import *
+
+game = Game("Move the Square", "light blue")
+
+player = Rectangle(0, 0, 40, 40, "orange")
+game.add_shape(player)
+
+while True:
+
+    if game.ispressed("Left"):
+        player.x -= 5
+    if game.ispressed("Right"):
+        player.x += 5
+    if game.ispressed("Up"):
+        player.y += 5
+    if game.ispressed("Down"):
+        player.y -= 5
+
+    game.update()</textarea>
+        </section>
+
+        <section class="canvas-panel">
+            <div class="canvas-wrapper">
+                <canvas id="game-canvas" width="800" height="700" tabindex="0"></canvas>
+            </div>
+            <div class="console-wrapper">
+                <div class="panel-label">console</div>
+                <pre id="console"></pre>
+            </div>
+        </section>
+    </main>
+
+    <div id="readme-overlay" class="overlay hidden">
+        <div class="overlay-backdrop"></div>
+        <div class="overlay-content">
+            <div class="overlay-header">
+                <h2>Instructions</h2>
+                <button id="close-readme" class="btn btn-close">&times;</button>
+            </div>
+            <div id="readme-body" class="markdown-body"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/comment/comment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        const editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+            mode: 'python',
+            theme: 'dracula',
+            lineNumbers: true,
+            indentUnit: 4,
+            tabSize: 4,
+            indentWithTabs: false,
+            extraKeys: {
+                'Ctrl-/': 'toggleComment',
+                'Cmd-/': 'toggleComment',
+            },
+            viewportMargin: Infinity,
+        });
+
+        const runBtn = document.getElementById('run-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        const statusEl = document.getElementById('status');
+        const consoleEl = document.getElementById('console');
+        const canvas = document.getElementById('game-canvas');
+
+        let worker = null;
+        let workerReady = false;
+        let offscreenCanvas = null;
+        let tickRunning = false;
+        const GAME_KEYS = new Set(['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ']);
+
+        function log(msg) {
+            consoleEl.textContent += msg + '\n';
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function clearConsole() {
+            consoleEl.textContent = '';
+        }
+
+        function showStatus(text, type) {
+            statusEl.textContent = text;
+            statusEl.className = 'status' + (type ? ' status-' + type : '');
+        }
+
+        const MODULE_FILES = {
+            '/modules/tphysics.py': 'tphysics.py',
+            '/modules/turtle.py': 'modules/turtle.py',
+            '/modules/tkinter/__init__.py': 'modules/tkinter/__init__.py',
+            '/modules/tkinter/font.py': 'modules/tkinter/font.py',
+        };
+
+        const EXAMPLE_GAMES = [
+            { name: 'Simple Chase', path: '../examples/games/chase_game_simple.py' },
+            { name: 'Chase Game', path: '../examples/games/chase_game.py' },
+            { name: 'Flappy Bird', path: '../examples/games/flappy_bird.py' },
+            { name: 'Pong', path: '../examples/games/pong.py' },
+            { name: 'Platformer', path: '../examples/games/platformer.py' },
+            { name: 'Apple Catch', path: '../examples/games/apple_catch.py' },
+            { name: 'Aim Trainer', path: '../examples/games/aim_trainer.py' },
+            { name: 'Snowglobe', path: '../examples/lesson_plans/snowglobe.py' },
+            { name: 'Sprite Demo', path: '../examples/sprites/sprites.py' },
+        ];
+
+        const exampleSelect = document.getElementById('example-select');
+        for (const g of EXAMPLE_GAMES) {
+            const opt = document.createElement('option');
+            opt.value = g.path;
+            opt.textContent = g.name;
+            exampleSelect.appendChild(opt);
+        }
+
+        async function loadExample(path) {
+            try {
+                const resp = await fetch(path + '?t=' + Date.now());
+                if (!resp.ok) throw new Error('HTTP ' + resp.status);
+                const text = await resp.text();
+                editor.setValue(text);
+                showStatus('Loaded: ' + path.split('/').pop().replace('.py', ''), 'ready');
+            } catch (err) {
+                log('Error loading example: ' + err.message);
+            }
+        }
+
+        exampleSelect.addEventListener('change', () => {
+            if (exampleSelect.value) {
+                if (tickRunning) stopCode();
+                loadExample(exampleSelect.value);
+                exampleSelect.value = '';
+            }
+        });
+
+        async function fetchModuleSources() {
+            const sources = {};
+            const bust = '?t=' + Date.now();
+            for (const [dest, src] of Object.entries(MODULE_FILES)) {
+                const resp = await fetch(src + bust);
+                if (!resp.ok) throw new Error(`Failed to load ${src}: ${resp.status}`);
+                sources[dest] = await resp.text();
+            }
+            return sources;
+        }
+
+        async function initWorker() {
+            worker = new Worker('worker.js?t=' + Date.now());
+
+            function sendTick() {
+                if (!tickRunning) return;
+                worker.postMessage({ type: 'tick' });
+            }
+
+            worker.onmessage = function (e) {
+                const { type, text, message, traceback } = e.data;
+
+                switch (type) {
+                    case 'status':
+                        showStatus(text);
+                        break;
+
+                    case 'ready':
+                        workerReady = true;
+                        worker.postMessage({
+                            type: 'init_canvas',
+                            width: canvas.width,
+                            height: canvas.height,
+                        });
+                        showStatus('Ready', 'ready');
+                        runBtn.disabled = false;
+                        break;
+
+                    case 'frame':
+                        const imageData = e.data.imageData;
+                        const frameCtx = canvas.getContext('2d');
+                        frameCtx.putImageData(imageData, 0, 0);
+                        if (tickRunning) {
+                            requestAnimationFrame(sendTick);
+                        }
+                        break;
+
+                    case 'tick_start':
+                        showStatus('Running', 'running');
+                        runBtn.disabled = true;
+                        stopBtn.disabled = false;
+                        clearConsole();
+                        tickRunning = true;
+                        requestAnimationFrame(sendTick);
+                        break;
+
+                    case 'running':
+                        showStatus('Running', 'running');
+                        runBtn.disabled = true;
+                        stopBtn.disabled = false;
+                        clearConsole();
+                        break;
+
+                    case 'done':
+                        showStatus('Finished', 'ready');
+                        runBtn.disabled = false;
+                        stopBtn.disabled = true;
+                        tickRunning = false;
+                        break;
+
+                    case 'error':
+                        log('Error: ' + message);
+                        if (traceback) log(traceback);
+                        showStatus('Error', 'error');
+                        runBtn.disabled = false;
+                        stopBtn.disabled = true;
+                        tickRunning = false;
+                        break;
+
+                    case 'stdout':
+                        log(text);
+                        break;
+                }
+            };
+
+            worker.onerror = function (err) {
+                log('Worker error: ' + err.message);
+                showStatus('Worker error', 'error');
+            };
+
+            showStatus('Loading modules...');
+            const moduleSources = await fetchModuleSources();
+            worker.postMessage({ type: 'init', moduleSources });
+        }
+
+        function runCode() {
+            if (!workerReady) return;
+            const code = editor.getValue();
+            clearConsole();
+            worker.postMessage({ type: 'run', code });
+            canvas.focus();
+        }
+
+        function stopCode() {
+            tickRunning = false;
+            worker.postMessage({ type: 'stop' });
+            showStatus('Stopping...', 'error');
+        }
+
+        runBtn.addEventListener('click', runCode);
+        stopBtn.addEventListener('click', stopCode);
+
+        const instrBtn = document.getElementById('instructions-btn');
+        const readmeOverlay = document.getElementById('readme-overlay');
+        const closeReadme = document.getElementById('close-readme');
+        const readmeBody = document.getElementById('readme-body');
+
+        instrBtn.addEventListener('click', async () => {
+            if (!readmeBody.dataset.loaded) {
+                try {
+                    const resp = await fetch('../README.md?t=' + Date.now());
+                    const md = await resp.text();
+                    readmeBody.innerHTML = marked.parse(md);
+                    readmeBody.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(h => {
+                        const id = h.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                        h.id = id;
+                    });
+                    readmeBody.addEventListener('click', (e) => {
+                        const link = e.target.closest('a');
+                        if (!link) return;
+                        const href = link.getAttribute('href');
+                        if (href && href.startsWith('#')) {
+                            e.preventDefault();
+                            const target = document.getElementById(href.slice(1));
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        } else if (href) {
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                        }
+                    });
+                    readmeBody.dataset.loaded = '1';
+                } catch (err) {
+                    readmeBody.textContent = 'Failed to load README: ' + err.message;
+                }
+            }
+            readmeOverlay.classList.remove('hidden');
+        });
+
+        closeReadme.addEventListener('click', () => {
+            readmeOverlay.classList.add('hidden');
+        });
+
+        readmeOverlay.addEventListener('click', (e) => {
+            if (e.target === readmeOverlay || e.target.classList.contains('overlay-backdrop')) {
+                readmeOverlay.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !readmeOverlay.classList.contains('hidden')) {
+                readmeOverlay.classList.add('hidden');
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                runCode();
+                return;
+            }
+            if (workerReady && tickRunning && GAME_KEYS.has(e.key)) {
+                e.preventDefault();
+                worker.postMessage({ type: 'keydown', key: e.key });
+            }
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (workerReady && tickRunning && GAME_KEYS.has(e.key)) {
+                e.preventDefault();
+                worker.postMessage({ type: 'keyup', key: e.key });
+            }
+        });
+
+        canvas.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            worker.postMessage({ type: 'click', x, y, button: e.button });
+        });
+
+        window.addEventListener('resize', () => {
+            // Resize handling can be added here
+        });
+
+        initWorker();
+    </script>
+</body>
+</html>
