@@ -19,6 +19,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Copy assets into web/
+        run: |
+          cp README.md web/README.md
+          cp -r examples web/examples
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

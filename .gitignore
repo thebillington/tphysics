@@ -101,3 +101,7 @@ ENV/
 .mypy_cache/
 
 docs
+
+# Dev symlinks
+web/README.md
+web/examples

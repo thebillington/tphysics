@@ -6,8 +6,18 @@ import os
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 
-# Serve from the repo root so that ../ paths resolve correctly
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+WEB_DIR = os.path.dirname(os.path.abspath(__file__))
+
+readme_link = os.path.join(WEB_DIR, 'README.md')
+examples_link = os.path.join(WEB_DIR, 'examples')
+readme_src = os.path.join(REPO_ROOT, 'README.md')
+examples_src = os.path.join(REPO_ROOT, 'examples')
+
+if not os.path.exists(readme_link):
+    os.symlink(readme_src, readme_link)
+if not os.path.exists(examples_link):
+    os.symlink(examples_src, examples_link)
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):

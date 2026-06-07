@@ -124,15 +124,15 @@ while True:
         };
 
         const EXAMPLE_GAMES = [
-            { name: 'Simple Chase', path: '../examples/games/chase_game_simple.py' },
-            { name: 'Chase Game', path: '../examples/games/chase_game.py' },
-            { name: 'Flappy Bird', path: '../examples/games/flappy_bird.py' },
-            { name: 'Pong', path: '../examples/games/pong.py' },
-            { name: 'Platformer', path: '../examples/games/platformer.py' },
-            { name: 'Apple Catch', path: '../examples/games/apple_catch.py' },
-            { name: 'Aim Trainer', path: '../examples/games/aim_trainer.py' },
-            { name: 'Snowglobe', path: '../examples/lesson_plans/snowglobe.py' },
-            { name: 'Sprite Demo', path: '../examples/sprites/sprites.py' },
+            { name: 'Simple Chase', path: 'examples/games/chase_game_simple.py' },
+            { name: 'Chase Game', path: 'examples/games/chase_game.py' },
+            { name: 'Flappy Bird', path: 'examples/games/flappy_bird.py' },
+            { name: 'Pong', path: 'examples/games/pong.py' },
+            { name: 'Platformer', path: 'examples/games/platformer.py' },
+            { name: 'Apple Catch', path: 'examples/games/apple_catch.py' },
+            { name: 'Aim Trainer', path: 'examples/games/aim_trainer.py' },
+            { name: 'Snowglobe', path: 'examples/lesson_plans/snowglobe.py' },
+            { name: 'Sprite Demo', path: 'examples/sprites/sprites.py' },
         ];
 
         const exampleSelect = document.getElementById('example-select');
@@ -158,6 +158,9 @@ while True:
         exampleSelect.addEventListener('change', () => {
             if (exampleSelect.value) {
                 if (tickRunning) stopCode();
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                clearConsole();
                 loadExample(exampleSelect.value);
                 exampleSelect.value = '';
             }
@@ -283,7 +286,7 @@ while True:
         instrBtn.addEventListener('click', async () => {
             if (!readmeBody.dataset.loaded) {
                 try {
-                    const resp = await fetch('../README.md?t=' + Date.now());
+                    const resp = await fetch('README.md?t=' + Date.now());
                     const md = await resp.text();
                     readmeBody.innerHTML = marked.parse(md);
                     readmeBody.querySelectorAll('h1, h2, h3, h4, h5, h6').forEach(h => {
