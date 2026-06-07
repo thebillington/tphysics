@@ -97,6 +97,16 @@ header h1 .subtitle {
     border: 1px solid var(--border);
 }
 
+.btn-issue {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+}
+
 .editor-toolbar {
     display: flex;
     align-items: center;
