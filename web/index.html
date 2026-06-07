@@ -158,8 +158,6 @@ while True:
         exampleSelect.addEventListener('change', () => {
             if (exampleSelect.value) {
                 if (tickRunning) stopCode();
-                const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 clearConsole();
                 loadExample(exampleSelect.value);
                 exampleSelect.value = '';
@@ -234,6 +232,7 @@ while True:
                         runBtn.disabled = false;
                         stopBtn.disabled = true;
                         tickRunning = false;
+                        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
                         break;
 
                     case 'error':
@@ -243,6 +242,7 @@ while True:
                         runBtn.disabled = false;
                         stopBtn.disabled = true;
                         tickRunning = false;
+                        canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
                         break;
 
                     case 'stdout':
