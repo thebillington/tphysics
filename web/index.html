@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Zero-dependency Python game engine for the classroom. Learn programming by building games with a game engine backed by Turtle graphics.">
+    <meta name="description" content="Free zero-dependency Python game engine for the classroom. One file, standard library only, turtle graphics rendering, keyboard and mouse input. No pip and no install.">
     <meta name="theme-color" content="#282a36">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://tphysics.uk">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <meta name="author" content="Billy Rebecchi">
+    <link rel="canonical" href="https://tphysics.uk/">
 
     <meta property="og:type" content="website">
     <meta property="og:title" content="tphysics - Python Game Engine in Your Browser">
@@ -21,7 +22,63 @@
     <meta name="twitter:description" content="Zero-dependency Python game engine for the classroom. Learn programming by building games with a game engine backed by Turtle graphics.">
     <meta name="twitter:image" content="https://tphysics.uk/og-image.png">
 
-    <title>tphysics REPL</title>
+    <title>tphysics — Free Python Game Engine for the Classroom</title>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://tphysics.uk/#website",
+          "url": "https://tphysics.uk/",
+          "name": "tphysics",
+          "description": "A free, zero-dependency, single-file Python game engine for the classroom, rendered with turtle graphics.",
+          "inLanguage": "en-GB",
+          "publisher": { "@id": "https://tphysics.uk/#organisation" }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://tphysics.uk/#organisation",
+          "name": "tphysics",
+          "url": "https://tphysics.uk/",
+          "founder": {
+            "@type": "Person",
+            "name": "Billy Rebecchi",
+            "url": "https://thebillington.co.uk"
+          },
+          "sameAs": [
+            "https://github.com/thebillington/tphysics",
+            "https://github.com/thebillington"
+          ]
+        },
+        {
+          "@type": "WebApplication",
+          "@id": "https://tphysics.uk/#app",
+          "name": "tphysics browser editor",
+          "url": "https://tphysics.uk/",
+          "description": "Run tphysics Python game engine examples in the browser. No install, no account and no server.",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "Any",
+          "browserRequirements": "Requires JavaScript and WebAssembly",
+          "isAccessibleForFree": true,
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" },
+          "featureList": [
+            "Single-file Python game engine",
+            "Turtle graphics rendering",
+            "Keyboard and mouse input",
+            "Classroom examples and tutorials",
+            "Browser editor with no installation"
+          ],
+          "sameAs": [
+            "https://github.com/thebillington/tphysics",
+            "https://tphysics.uk/for-teachers/"
+          ],
+          "publisher": { "@id": "https://tphysics.uk/#organisation" }
+        }
+      ]
+    }
+    </script>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23282a36' width='100' height='100' rx='12' stroke='%236272a4' stroke-width='4'/%3E%3Ctext y='65' x='50' text-anchor='middle' font-size='50' font-family='monospace' font-weight='bold' fill='%23f8f8f2'%3E_%3C/text%3E%3Ctext y='48' x='35' text-anchor='middle' font-size='38' font-family='monospace' font-weight='bold' fill='%2350fa7b'%3E%3E%3C/text%3E%3C/svg%3E">
 
     <link rel="stylesheet" href="vendor/codemirror/codemirror.min.css">
@@ -663,7 +720,7 @@ while True:
         initWorker();
     </script>
     <footer>
-        <a href="https://github.com/thebillington/tphysics" target="_blank" rel="noopener noreferrer"><span class="repo">tphysics</span></a> is an open source game engine built and maintained by <a href="https://github.com/thebillington" target="_blank" rel="noopener noreferrer">thebillington</a>
+        <a href="https://github.com/thebillington/tphysics" target="_blank" rel="noopener noreferrer"><span class="repo">tphysics</span></a> is an open source game engine built and maintained by <a href="https://github.com/thebillington" target="_blank" rel="noopener noreferrer">thebillington</a> &middot; <a href="/for-teachers/">For teachers</a> &middot; <a href="https://github.com/sponsors/thebillington" target="_blank" rel="noopener noreferrer" class="sponsor">Sponsor this project</a>
     </footer>
 </body>
 </html>

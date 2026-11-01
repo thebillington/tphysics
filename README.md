@@ -1,6 +1,11 @@
-# tphysics 
+# tphysics
+
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/thebillington)
 
 tphysics is a cross platform physics engine built for educational purposes.
+
+- Run it in the browser: [https://tphysics.uk](https://tphysics.uk)
+- Guide for teachers: [https://tphysics.uk/for-teachers/](https://tphysics.uk/for-teachers/)
 
 The entire engine is contained in a single file and uses Turtle graphics for rendering, making it an excellent candidate for use in the classroom.
 
@@ -442,3 +447,8 @@ g.addclick(click, 1)
 #Right click listener
 g.addclick(click, 2)
 ```
+
+## Support
+
+This project is free and open source. If it saves you time, you can support
+ongoing maintenance through [GitHub Sponsors](https://github.com/sponsors/thebillington).

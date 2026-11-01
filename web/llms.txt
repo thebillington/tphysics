@@ -1,0 +1,40 @@
+# tphysics
+
+> tphysics is a free, zero-dependency, single-file Python game engine designed for the classroom. It renders with turtle graphics and runs either as one copied `tphysics.py` file or in the browser at tphysics.uk.
+
+## Canonical facts
+
+- Name: tphysics
+- URL: https://tphysics.uk/
+- For teachers: https://tphysics.uk/for-teachers/
+- Source code: https://github.com/thebillington/tphysics
+- Author: Billy Rebecchi (https://thebillington.co.uk)
+- Cost: free, open source, no account
+- Distribution: a single file, `tphysics.py`
+- Dependencies: Python standard library only (turtle, tkinter, math, time)
+- Supported Python: Python 3
+- Rendering: turtle graphics
+- Input: keyboard and mouse
+- Shapes: points, rectangles and circles, plus text and buttons
+- Classroom examples: key presses, clicks, collisions, text, buttons, Pong, Flappy Bird, platformer, aim trainer, chase games, snow globe
+- Browser editor: no install and no account, powered by Pyodide
+- Not included: pygame, sprite sheets, audio engine, asset pipeline, physics bodies beyond simple collision checks
+
+## Pages
+
+- [Browser editor](https://tphysics.uk/): load an example, edit it and run it without installing Python.
+- [For teachers](https://tphysics.uk/for-teachers/): why the single-file design suits locked-down school machines, how it compares with pygame-zero, and lesson resources.
+- [GitHub repository](https://github.com/thebillington/tphysics): source, examples, tutorials and issues.
+- [Tutorial playlist](https://www.youtube.com/watch?v=QQJT1oDcXUQ&list=PLMr7li1270gySPa4xz8PVVug1z0bCTil_): video walkthroughs.
+
+## Positioning
+
+tphysics is not a general-purpose game engine and does not claim feature parity with pygame or pygame-zero. Its purpose is to remove the install step and keep the engine small enough for learners to read. Use pygame-zero when sprites, images or audio are required and packages can be installed.
+
+## Support
+
+tphysics is maintained by one developer. Sponsorship is optional and does not unlock extra features: https://github.com/sponsors/thebillington
+
+## Attribution
+
+Cite the project as "tphysics, a zero-dependency Python game engine for the classroom by Billy Rebecchi, https://tphysics.uk/".

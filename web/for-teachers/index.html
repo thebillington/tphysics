@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tphysics for Teachers — Zero-Dependency Python Game Engine</title>
+    <meta name="description" content="A single-file Python game engine for the classroom. No pip, no install, no dependencies beyond the standard library. Turtle graphics, keyboard and mouse input, and readable source for GCSE and A-level projects.">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+    <meta name="author" content="Billy Rebecchi">
+    <link rel="canonical" href="https://tphysics.uk/for-teachers/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="tphysics for Teachers — Zero-Dependency Python Game Engine">
+    <meta property="og:description" content="A single-file Python game engine for the classroom. No pip, no install, no dependencies beyond the standard library.">
+    <meta property="og:url" content="https://tphysics.uk/for-teachers/">
+    <meta property="og:image" content="https://tphysics.uk/og-image.png">
+    <meta property="og:site_name" content="tphysics">
+    <meta property="og:locale" content="en_GB">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="tphysics for Teachers — Zero-Dependency Python Game Engine">
+    <meta name="twitter:description" content="A single-file Python game engine for the classroom. No pip, no install, no dependencies beyond the standard library.">
+    <meta name="twitter:image" content="https://tphysics.uk/og-image.png">
+
+    <link rel="stylesheet" href="../pages.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://tphysics.uk/for-teachers/#page",
+          "url": "https://tphysics.uk/for-teachers/",
+          "name": "tphysics for Teachers — Zero-Dependency Python Game Engine",
+          "description": "A single-file Python game engine for the classroom. No pip, no install, no dependencies beyond the standard library.",
+          "isPartOf": { "@id": "https://tphysics.uk/#website" },
+          "inLanguage": "en-GB",
+          "primaryImageOfPage": "https://tphysics.uk/og-image.png",
+          "about": { "@id": "https://tphysics.uk/#app" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "tphysics", "item": "https://tphysics.uk/" },
+            { "@type": "ListItem", "position": 2, "name": "For teachers", "item": "https://tphysics.uk/for-teachers/" }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does tphysics need pygame or any other package?",
+              "acceptedAnswer": { "@type": "Answer", "text": "No. tphysics uses only the Python standard library, including turtle and tkinter. The whole engine is one file, tphysics.py." }
+            },
+            {
+              "@type": "Question",
+              "name": "Can students use tphysics without installing anything?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. Students can download tphysics.py and place it next to their own program, or use the browser editor at tphysics.uk. The browser version needs no local Python installation." }
+            },
+            {
+              "@type": "Question",
+              "name": "What can students build with tphysics?",
+              "acceptedAnswer": { "@type": "Answer", "text": "The included examples cover key presses, mouse clicks, collisions, text and buttons, plus games such as Pong, Flappy Bird, a platformer, an aim trainer and chase games." }
+            },
+            {
+              "@type": "Question",
+              "name": "How is tphysics different from pygame-zero?",
+              "acceptedAnswer": { "@type": "Answer", "text": "pygame-zero is a zero-boilerplate wrapper around pygame and needs pygame installed. tphysics is a single standard-library file that renders with turtle graphics. It is deliberately smaller than pygame-zero: rectangles, circles, text, keyboard and mouse input, with no sprite or audio engine." }
+            },
+            {
+              "@type": "Question",
+              "name": "Does tphysics work on school computers with restricted installs?",
+              "acceptedAnswer": { "@type": "Answer", "text": "That is the main use case. If Python with tkinter is already present, copying one file into the project folder is enough. If Python cannot be installed at all, use the browser editor." }
+            },
+            {
+              "@type": "Question",
+              "name": "Is tphysics free?",
+              "acceptedAnswer": { "@type": "Answer", "text": "Yes. tphysics is free and open source, with no account, licence fee or classroom subscription." }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="/">tphysics <span>game engine in your browser</span></a>
+        <nav aria-label="Main">
+            <a href="/">Browser editor</a>
+            <a href="https://github.com/thebillington/tphysics" rel="noopener">GitHub</a>
+            <a href="https://www.youtube.com/watch?v=QQJT1oDcXUQ&amp;list=PLMr7li1270gySPa4xz8PVVug1z0bCTil_" rel="noopener">Tutorials</a>
+            <a href="https://github.com/sponsors/thebillington" rel="noopener">Sponsor</a>
+        </nav>
+    </header>
+
+    <main>
+        <p class="eyebrow">For teachers · Python · GCSE and A-level</p>
+        <h1>A Python game engine that survives a school network</h1>
+        <p class="lede">tphysics is a single-file Python game engine built for the classroom. Copy one file, import it, and students are drawing shapes, handling key presses and building games. No pip, no virtual environment and no administrator rights.</p>
+
+        <div class="cta-row">
+            <a class="button" href="/">Open the browser editor</a>
+            <a class="button secondary" href="https://github.com/thebillington/tphysics" rel="noopener">Download tphysics.py</a>
+        </div>
+
+        <h2>Why a single file matters</h2>
+        <p>Most game engines assume a normal development machine: an installer, a package manager, a graphics library and a working build toolchain. School laptops often have none of those. tphysics makes a different trade-off. It is one file that uses the standard library and renders with turtle graphics, so the gap between opening the folder and running a game is as small as it can be.</p>
+
+        <div class="cards">
+            <div class="card">
+                <h3>Zero dependencies</h3>
+                <p>Only the Python standard library. No pygame, no wheels, no package index and no build step.</p>
+            </div>
+            <div class="card">
+                <h3>One file to copy</h3>
+                <p>Put <code>tphysics.py</code> beside the student's program and <code>from tphysics import *</code>.</p>
+            </div>
+            <div class="card">
+                <h3>Readable source</h3>
+                <p>The engine is deliberately small and commented, so students can look inside the abstraction rather than treat it as magic.</p>
+            </div>
+            <div class="card">
+                <h3>Runs in the browser</h3>
+                <p>If local Python is impossible, the same examples run at tphysics.uk with no install at all.</p>
+            </div>
+        </div>
+
+        <h2>What students can build</h2>
+        <p>The repository includes complete examples rather than isolated snippets:</p>
+        <ul>
+            <li>Key presses, mouse clicks, collisions, text and buttons.</li>
+            <li>Pong, Flappy Bird, an aim trainer, a platformer and chase games.</li>
+            <li>Lesson-plan examples such as a snow globe.</li>
+        </ul>
+        <p>The engine provides rectangles, circles, text and input events. That is enough for a first game project without the overhead of sprites, scenes, audio and an asset pipeline.</p>
+
+        <h2>How it compares with pygame-zero</h2>
+        <p><a href="https://pygame-zero.readthedocs.io/" rel="noopener">pygame-zero</a> is excellent and more capable: it wraps pygame, supports images and sound, and has a large community. It also needs pygame installed. tphysics is narrower on purpose.</p>
+        <table>
+            <thead>
+                <tr><th></th><th>tphysics</th><th>pygame-zero</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Install</td><td>Copy one file</td><td>Install pygame and pgzero</td></tr>
+                <tr><td>Rendering</td><td>Turtle graphics</td><td>Pygame / SDL</td></tr>
+                <tr><td>Feature set</td><td>Shapes, text, keyboard, mouse</td><td>Sprites, images, sound, more</td></tr>
+                <tr><td>Classroom fit</td><td>Locked-down machines, first games</td><td>Machines where installs are allowed</td></tr>
+            </tbody>
+        </table>
+        <p>If your students can install packages and need sprites or audio, use pygame-zero. If the install is the blocker, tphysics is the smaller step.</p>
+
+        <h2>Getting started in a lesson</h2>
+        <ol>
+            <li>Download <code>tphysics.py</code> from the <a href="https://github.com/thebillington/tphysics" rel="noopener">repository</a>.</li>
+            <li>Put it in the same folder as the student's Python file.</li>
+            <li>Start with <code>from tphysics import *</code> and one of the example programs.</li>
+            <li>Change a value, run it again, and let the visual result drive the explanation.</li>
+        </ol>
+        <p>No local Python? Open the <a href="/">browser editor</a>, load an example and run it there. The editor has the engine and the examples built in.</p>
+
+        <h2>Teaching resources</h2>
+        <ul>
+            <li><a href="https://www.youtube.com/watch?v=6z4ZEE0VqHU" rel="noopener">Teacher's introduction to tphysics in the classroom</a></li>
+            <li><a href="https://www.youtube.com/watch?v=QQJT1oDcXUQ" rel="noopener">How tphysics renders using turtle graphics</a></li>
+            <li><a href="https://www.youtube.com/watch?v=QQJT1oDcXUQ&amp;list=PLMr7li1270gySPa4xz8PVVug1z0bCTil_" rel="noopener">The full tutorial playlist</a></li>
+            <li><a href="https://github.com/thebillington/tphysics/tree/master/tutorials" rel="noopener">Written tutorials in the repository</a></li>
+        </ul>
+
+        <h2 id="faq">Frequently asked questions</h2>
+        <div class="faq">
+            <details>
+                <summary>Does tphysics need pygame or any other package?</summary>
+                <p>No. tphysics uses only the Python standard library, including turtle and tkinter. The whole engine is one file, <code>tphysics.py</code>.</p>
+            </details>
+            <details>
+                <summary>Can students use tphysics without installing anything?</summary>
+                <p>Yes. Students can download <code>tphysics.py</code> and place it next to their own program, or use the browser editor at tphysics.uk. The browser version needs no local Python installation.</p>
+            </details>
+            <details>
+                <summary>What can students build with tphysics?</summary>
+                <p>The included examples cover key presses, mouse clicks, collisions, text and buttons, plus games such as Pong, Flappy Bird, a platformer, an aim trainer and chase games.</p>
+            </details>
+            <details>
+                <summary>How is tphysics different from pygame-zero?</summary>
+                <p>pygame-zero is a zero-boilerplate wrapper around pygame and needs pygame installed. tphysics is a single standard-library file that renders with turtle graphics. It is deliberately smaller than pygame-zero: rectangles, circles, text, keyboard and mouse input, with no sprite or audio engine.</p>
+            </details>
+            <details>
+                <summary>Does tphysics work on school computers with restricted installs?</summary>
+                <p>That is the main use case. If Python with tkinter is already present, copying one file into the project folder is enough. If Python cannot be installed at all, use the browser editor.</p>
+            </details>
+            <details>
+                <summary>Is tphysics free?</summary>
+                <p>Yes. tphysics is free and open source, with no account, licence fee or classroom subscription.</p>
+            </details>
+        </div>
+
+        <h2>Try it</h2>
+        <p>Open the <a href="/">tphysics browser editor</a> to run an example now, or read the <a href="https://github.com/thebillington/tphysics" rel="noopener">source and examples on GitHub</a>.</p>
+    </main>
+
+    <footer class="site-footer">
+        <p><a class="repo" href="https://github.com/thebillington/tphysics" rel="noopener">tphysics</a> is an open source game engine built and maintained by <a href="https://github.com/thebillington" rel="noopener">thebillington</a>.</p>
+        <p><a href="https://github.com/sponsors/thebillington" rel="noopener">Sponsor this project</a> · <a href="/">Browser editor</a> · <a href="https://github.com/thebillington/tphysics" rel="noopener">GitHub</a></p>
+    </footer>
+</body>
+</html>
